@@ -1,0 +1,16 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/analytics/page": "app/admin/analytics/page.js",
+  "/admin/bookings/page": "app/admin/bookings/page.js",
+  "/admin/calendar/page": "app/admin/calendar/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/admin/login/page": "app/admin/login/page.js",
+  "/admin/users/page": "app/admin/users/page.js",
+  "/page": "app/page.js",
+  "/user/applications/page": "app/user/applications/page.js",
+  "/user/book/page": "app/user/book/page.js",
+  "/user/calendar/page": "app/user/calendar/page.js",
+  "/user/dashboard/page": "app/user/dashboard/page.js",
+  "/user/login/page": "app/user/login/page.js"
+}

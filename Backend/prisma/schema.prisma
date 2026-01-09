@@ -1,0 +1,126 @@
+// Prisma Schema for SpaceBook Application
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SpaceType {
+  auditorium
+  gym
+  soccer
+}
+
+enum UserRole {
+  user
+  admin
+}
+
+enum UserStatus {
+  active
+  inactive
+}
+
+enum BookingStatus {
+  pending
+  approved
+  rejected
+}
+
+enum NotificationType {
+  booking_request
+  status_update
+  system
+}
+
+model User {
+  id            String        @id @default(uuid())
+  name          String
+  email         String        @unique
+  password      String        // hashed password
+  role          UserRole      @default(user)
+  status        UserStatus    @default(active)
+  avatar        String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  bookings      Booking[]
+  notifications Notification[]
+  refreshTokens RefreshToken[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
+}
+
+model Space {
+  id          String    @id @default(uuid())
+  name        String
+  type        SpaceType
+  capacity    Int
+  description String
+  image       String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  bookings    Booking[]
+
+  @@map("spaces")
+}
+
+model Booking {
+  id        String        @id @default(uuid())
+  userId    String
+  spaceId   String
+  date      DateTime      @db.Date
+  startTime String        // Store as "HH:mm" format
+  endTime   String        // Store as "HH:mm" format
+  status    BookingStatus @default(pending)
+  notes     String?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  space     Space         @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  notifications Notification[]
+
+  @@index([userId])
+  @@index([spaceId])
+  @@index([date])
+  @@index([status])
+  @@map("bookings")
+}
+
+model Notification {
+  id        String          @id @default(uuid())
+  userId    String
+  title     String
+  message   String
+  type      NotificationType
+  read      Boolean         @default(false)
+  bookingId String?
+  createdAt DateTime        @default(now())
+
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  booking   Booking?        @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([read])
+  @@map("notifications")
+}
+
+

@@ -1,0 +1,286 @@
+[00:00:01.187] Server  LOG      ✓ Ready in 803ms
+[00:00:05.115] Server  LOG      ○ Compiling /user/login ...
+[00:00:14.392] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:14.854] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:16.141] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:16.142] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/user/login","route":"/user/login"}
+[00:00:16.142] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/user/login color: rgb(120, 120, 120) color: inherit {"dp":"/user/login","o":"http://localhost:5055/user/login","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947077461}
+[00:00:16.536] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:16.536] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/calendar","route":"/admin/calendar"}
+[00:00:16.537] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/admin/calendar color: rgb(120, 120, 120) color: inherit {"dp":"/admin/calendar","o":"http://localhost:5055/admin/calendar","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947078018}
+[00:00:16.537] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/user/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/user/dashboard","o":"http://localhost:5055/user/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947078047}
+[00:03:49.747] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:03:49.747] Browser LOG     📅 [USER CALENDAR] Counts received: {}
+[00:03:49.747] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-09
+[00:03:49.747] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:03:49.747] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:03:49.747] Browser LOG     📅 [USER CALENDAR] Counts received: {}
+[00:03:49.747] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-09
+[00:03:49.747] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:03:49.747] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/user/calendar color: rgb(120, 120, 120) color: inherit {"dp":"/user/calendar","o":"http://localhost:5055/user/calendar","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947291250}
+[00:03:49.747] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:03:49.747] Browser LOG     📅 [USER CALENDAR] Counts received: {}
+[00:03:49.747] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-09
+[00:03:49.747] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:03:52.790] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/user/login color: rgb(120, 120, 120) color: inherit {"dp":"/user/login","o":"http://localhost:5055/user/login","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947294430}
+[00:04:00.216] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/user/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/user/dashboard","o":"http://localhost:5055/user/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947301860}
+[00:04:02.953] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:04:02.953] Browser LOG     📅 [USER CALENDAR] Counts received: {}
+[00:04:02.953] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-09
+[00:04:02.953] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:04:02.953] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:04:02.953] Browser LOG     📅 [USER CALENDAR] Counts received: {}
+[00:04:02.953] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-09
+[00:04:02.953] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:04:02.953] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/user/calendar color: rgb(120, 120, 120) color: inherit {"dp":"/user/calendar","o":"http://localhost:5055/user/calendar","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947304580}
+[00:04:02.953] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:04:02.953] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:04:02.953] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-09
+[00:04:02.953] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:04:07.868] Browser LOG     📅 Date clicked: 2026-01-17
+[00:04:07.868] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:04:07.868] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:04:07.868] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-17
+[00:04:07.868] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:04:09.553] Browser LOG     📅 Date clicked: 2026-01-17
+[00:04:10.020] Browser LOG     📅 Date clicked: 2026-01-17
+[00:04:25.087] Browser LOG     📅 Date clicked: 2026-01-17
+[00:04:25.663] Browser LOG     📅 Date clicked: 2026-01-17
+[00:04:27.048] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:27.323] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:04:27.323] Browser LOG     📅 [USER CALENDAR] Counts received: {}
+[00:04:27.323] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-09
+[00:04:27.323] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:04:27.323] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:04:27.323] Browser LOG     📅 [USER CALENDAR] Counts received: {}
+[00:04:27.323] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-09
+[00:04:27.323] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:04:27.525] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:04:27.525] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:04:27.525] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-09
+[00:04:27.525] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:04:27.525] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:04:27.525] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/user/calendar","route":"/user/calendar"}
+[00:04:27.525] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/user/calendar color: rgb(120, 120, 120) color: inherit {"dp":"/user/calendar","o":"http://localhost:5055/user/calendar","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947329171}
+[00:04:29.344] Browser LOG     📅 Date clicked: 2026-01-10
+[00:04:29.344] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:04:29.344] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:04:29.344] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-10
+[00:04:29.344] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:04:36.588] Browser LOG     📅 Date clicked: 2026-01-17
+[00:04:36.588] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:04:36.588] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:04:36.588] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-17
+[00:04:36.588] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:07:13.599] Browser LOG     📅 Date clicked: 2026-01-16
+[00:07:13.599] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:07:13.599] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:07:13.599] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-16
+[00:07:13.599] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:07:14.841] Browser LOG     📅 Date clicked: 2026-01-17
+[00:07:14.841] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:07:14.841] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:07:14.841] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-17
+[00:07:14.841] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:07:14.841] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:07:14.841] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:07:14.841] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-17
+[00:07:14.841] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 1
+[00:07:19.272] Browser LOG     📅 Date clicked: 2026-01-10
+[00:07:19.272] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:07:19.272] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:07:19.272] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-10
+[00:07:19.272] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:07:19.272] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:07:19.272] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:07:19.272] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-10
+[00:07:19.272] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 1
+[00:07:20.094] Browser LOG     📅 Date clicked: 2026-01-17
+[00:07:20.094] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:07:20.094] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:07:20.094] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-17
+[00:07:20.094] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 1
+[00:07:20.841] Browser LOG     📅 Date clicked: 2026-01-09
+[00:07:20.842] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:07:20.842] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:07:20.842] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-09
+[00:07:20.842] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:07:21.822] Browser LOG     📅 Date clicked: 2026-01-21
+[00:07:21.822] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:07:21.822] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:07:21.822] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-21
+[00:07:21.822] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:07:21.822] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:07:21.822] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:07:21.822] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-21
+[00:07:21.822] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 1
+[00:07:22.992] Browser LOG     📅 Date clicked: 2026-01-12
+[00:07:22.992] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:07:22.992] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:07:22.992] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-12
+[00:07:22.992] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:07:22.992] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:07:22.992] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:07:22.992] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-12
+[00:07:22.992] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 1
+[00:07:23.777] Browser LOG     📅 Date clicked: 2026-01-19
+[00:07:23.777] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:07:23.777] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:07:23.777] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-19
+[00:07:23.777] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 0
+[00:07:23.777] Browser LOG     📅 [USER CALENDAR] Fetching counts for: 2026-01-01 to 2026-01-31
+[00:07:23.777] Browser LOG     📅 [USER CALENDAR] Counts received: {"2026-01-10":1,"2026-01-12":1,"2026-01-17":1,"2026-01-19":1,"2026-01-21":1}
+[00:07:23.777] Browser LOG     📅 [USER CALENDAR] Selected date: 2026-01-19
+[00:07:23.777] Browser LOG     📅 [USER CALENDAR] Selected date bookings: 1
+[00:07:31.549] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/user/login color: rgb(120, 120, 120) color: inherit {"dp":"/user/login","o":"http://localhost:5055/user/login","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947513193}
+[00:07:34.037] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:5055/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947515685}
+[00:07:36.685] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/admin/login color: rgb(120, 120, 120) color: inherit {"dp":"/admin/login","o":"http://localhost:5055/admin/login","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947518328}
+[00:07:43.050] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:5055/admin/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947524695}
+[00:07:45.220] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/admin/calendar color: rgb(120, 120, 120) color: inherit {"dp":"/admin/calendar","o":"http://localhost:5055/admin/calendar","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947526866}
+[00:07:54.077] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/admin/bookings color: rgb(120, 120, 120) color: inherit {"dp":"/admin/bookings","o":"http://localhost:5055/admin/bookings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947535723}
+[00:10:51.150] Server  LOG      ✓ Compiled in 800ms
+[00:11:01.497] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:11:01.786] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:11:01.786] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/bookings","route":"/admin/bookings"}
+[00:11:01.786] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/admin/bookings color: rgb(120, 120, 120) color: inherit {"dp":"/admin/bookings","o":"http://localhost:5055/admin/bookings","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947723429}
+[00:11:01.786] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/user/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/user/dashboard","o":"http://localhost:5055/user/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947723434}
+[00:11:02.073] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:11:02.297] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <main className="flex-1 fle...">
+      <Card className="w-full max...">
+        <div data-slot="card" className="text-card-...">
+          <CardHeader>
+          <CardContent>
+            <div data-slot="card-content" className="px-6">
+              <Tabs defaultValue="login" className="w-full">
+                <Tabs data-slot="tabs" className="flex flex-..." defaultValue="login">
+                  <TabsProvider scope={undefined} baseId="radix-_R_5..." value="login" ...>
+                    <Primitive.div dir="ltr" data-orientation="horizontal" data-slot="tabs" className="flex flex-..." ...>
+                      <div dir="ltr" data-orientation="horizontal" data-slot="tabs" className="flex flex-..." ref={null}>
+                        ...
+                          <div role="tablist" aria-orientation="horizontal" data-slot="tabs-list" ...>
+                            ...
+                              <Slot tabIndex={-1} data-orientation="horizontal" onMouseDown={function handleEvent} ...>
+                                <SlotClone tabIndex={-1} data-orientation="horizontal" onMouseDown={function handleEvent} ...>
+                                  <Primitive.button type="button" role="tab" aria-selected={true} ...>
+                                    <button
+                                      type="button"
+                                      role="tab"
+                                      aria-selected={true}
++                                     aria-controls="radix-_R_59bn5rcndlb_-content-login"
+-                                     aria-controls="radix-_R_l5esndkndlb_-content-login"
+                                      data-state="active"
+                                      data-disabled={undefined}
+                                      disabled={false}
++                                     id="radix-_R_59bn5rcndlb_-trigger-login"
+-                                     id="radix-_R_l5esndkndlb_-trigger-login"
+                                      data-slot="tabs-trigger"
+                                      className={"data-[state=active]:bg-background dark:data-[state=active]:text-for..."}
+                                      onMouseDown={function}
+                                      onKeyDown={function}
+                                      onFocus={function}
+                                      tabIndex={-1}
+                                      data-orientation="horizontal"
+                                      data-radix-collection-item=""
+                                      ref={function}
+                                    >
++                                     Sign In
+                            ...
+                              <Slot tabIndex={-1} data-orientation="horizontal" onMouseDown={function handleEvent} ...>
+                                <SlotClone tabIndex={-1} data-orientation="horizontal" onMouseDown={function handleEvent} ...>
+                                  <Primitive.button type="button" role="tab" aria-selected={false} ...>
+                                    <button
+                                      type="button"
+                                      role="tab"
+                                      aria-selected={false}
++                                     aria-controls="radix-_R_59bn5rcndlb_-content-register"
+-                                     aria-controls="radix-_R_l5esndkndlb_-content-register"
+                                      data-state="inactive"
+                                      data-disabled={undefined}
+                                      disabled={false}
++                                     id="radix-_R_59bn5rcndlb_-trigger-register"
+-                                     id="radix-_R_l5esndkndlb_-trigger-register"
+                                      data-slot="tabs-trigger"
+                                      className={"data-[state=active]:bg-background dark:data-[state=active]:text-for..."}
+                                      onMouseDown={function}
+                                      onKeyDown={function}
+                                      onFocus={function}
+                                      tabIndex={-1}
+                                      data-orientation="horizontal"
+                                      data-radix-collection-item=""
+                                      ref={function}
+                                    >
++                                     Register
+                        <TabsContent value="login">
+                          <TabsContent data-slot="tabs-content" className="flex-1 out..." value="login">
+                            <Presence present={true}>
+                              <Primitive.div data-state="active" data-orientation="horizontal" role="tabpanel" ...>
+                                <div
+                                  data-state="active"
+                                  data-orientation="horizontal"
+                                  role="tabpanel"
++                                 aria-labelledby="radix-_R_59bn5rcndlb_-trigger-login"
+-                                 aria-labelledby="radix-_R_l5esndkndlb_-trigger-login"
+                                  hidden={false}
++                                 id="radix-_R_59bn5rcndlb_-content-login"
+-                                 id="radix-_R_l5esndkndlb_-content-login"
+                                  tabIndex={0}
+                                  data-slot="tabs-content"
+                                  className="flex-1 outline-none"
+                                  style={{animationDuration:"0s"}}
+                                  ref={function}
+                                >
+                        <TabsContent value="register">
+                          <TabsContent data-slot="tabs-content" className="flex-1 out..." value="register">
+                            <Presence present={false}>
+                              <Primitive.div data-state="inactive" data-orientation="horizontal" role="tabpanel" ...>
+                                <div
+                                  data-state="inactive"
+                                  data-orientation="horizontal"
+                                  role="tabpanel"
++                                 aria-labelledby="radix-_R_59bn5rcndlb_-trigger-register"
+-                                 aria-labelledby="radix-_R_l5esndkndlb_-trigger-register"
+                                  hidden={true}
++                                 id="radix-_R_59bn5rcndlb_-content-register"
+-                                 id="radix-_R_l5esndkndlb_-content-register"
+                                  tabIndex={0}
+                                  data-slot="tabs-content"
+                                  className="flex-1 outline-none"
+                                  style={{animationDuration:undefined}}
+                                  ref={function}
+                                >
+
+[00:11:02.399] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:11:02.399] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/user/login","route":"/user/login"}
+[00:11:02.399] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/user/login color: rgb(120, 120, 120) color: inherit {"dp":"/user/login","o":"http://localhost:5055/user/login","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947724048}
+[00:11:07.015] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:11:07.184] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:11:07.184] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/login","route":"/admin/login"}
+[00:11:07.184] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/admin/login color: rgb(120, 120, 120) color: inherit {"dp":"/admin/login","o":"http://localhost:5055/admin/login","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947728834}
+[00:11:47.804] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:11:48.133] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:11:48.133] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/bookings","route":"/admin/bookings"}
+[00:11:48.134] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/admin/bookings color: rgb(120, 120, 120) color: inherit {"dp":"/admin/bookings","o":"http://localhost:5055/admin/bookings","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947769710}
+[00:11:48.134] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/user/login color: rgb(120, 120, 120) color: inherit {"dp":"/user/login","o":"http://localhost:5055/user/login","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947769763}
+[00:11:54.114] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:11:54.288] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:11:54.288] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/login","route":"/admin/login"}
+[00:11:54.288] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/admin/login color: rgb(120, 120, 120) color: inherit {"dp":"/admin/login","o":"http://localhost:5055/admin/login","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947775937}
+[00:11:59.718] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:5055/admin/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947781362}
+[00:12:01.781] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/admin/bookings color: rgb(120, 120, 120) color: inherit {"dp":"/admin/bookings","o":"http://localhost:5055/admin/bookings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947783396}
+[00:12:43.290] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/admin/calendar color: rgb(120, 120, 120) color: inherit {"dp":"/admin/calendar","o":"http://localhost:5055/admin/calendar","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947824933}
+[00:12:57.848] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/admin/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/admin/dashboard","o":"http://localhost:5055/admin/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947839495}
+[00:13:11.502] Server  LOG      ✓ Compiled in 88ms
+[00:13:38.301] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:5055/admin/bookings color: rgb(120, 120, 120) color: inherit {"dp":"/admin/bookings","o":"http://localhost:5055/admin/bookings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1767947879888}
