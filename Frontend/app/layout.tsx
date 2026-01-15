@@ -3,7 +3,6 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { NextIntlClientProvider } from 'next-intl'
-import { getLocale, getMessages } from 'next-intl/server'
 import { defaultLocale } from '../i18n/config'
 import "./globals.css"
 
@@ -30,16 +29,9 @@ export default async function RootLayout({
 }>) {
   // For static export, use default locale during build
   // Locale switching will be handled client-side via cookies
-  let locale: string = defaultLocale;
-  let messages: any;
-  
-  try {
-    locale = await getLocale();
-    messages = await getMessages();
-  } catch (error) {
-    // Fallback for static export - use default locale
-    messages = (await import(`../messages/${defaultLocale}.json`)).default;
-  }
+  // Avoid using getLocale()/getMessages() as they use headers() which breaks static export
+  const locale = defaultLocale;
+  const messages = (await import(`../messages/${defaultLocale}.json`)).default;
 
   return (
     <html lang={locale}>
