@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   title: "SpaceBook - Reserva de Espacios Deportivos y Eventos",
   description: "Reserva instalaciones deportivas y espacios para eventos fácilmente",
   generator: "v0.app",
+  icons: {
+    icon: '/icon.svg',
+    apple: '/apple-icon.png',
+  },
 }
 
 export default async function RootLayout({

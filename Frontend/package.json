@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "build:dev": "node scripts/build-dev.js",
+    "build:prod": "node scripts/build-prod.js",
     "dev": "next dev -p 5055",
     "lint": "eslint .",
     "start": "next start -p 5055"
@@ -69,6 +71,7 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv-cli": "^11.0.0",
     "postcss": "^8.5",
     "tailwindcss": "^4.1.9",
     "tw-animate-css": "1.3.3",
