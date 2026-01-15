@@ -8,7 +8,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const envFile = path.join(__dirname, '..', '.env.development');
+const envFile = path.join(__dirname, '..', 'environment', '.env.development');
 const envLocalFile = path.join(__dirname, '..', '.env.production.local');
 
 // Check if .env.development exists
