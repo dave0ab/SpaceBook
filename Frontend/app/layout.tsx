@@ -4,7 +4,7 @@ import { Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
-import { defaultLocale } from './i18n/config'
+import { defaultLocale } from '../i18n/config'
 import "./globals.css"
 
 const inter = Inter({ 
