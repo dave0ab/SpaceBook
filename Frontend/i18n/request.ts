@@ -1,15 +1,10 @@
 import { getRequestConfig } from 'next-intl/server';
-import { defaultLocale, locales, type Locale } from './config';
+import { defaultLocale } from './config';
 
-export default getRequestConfig(async ({ requestLocale }) => {
-  // For static export, use the request locale or default
-  // This will be handled client-side for locale switching
-  let locale: Locale = defaultLocale;
-  
-  // If requestLocale is provided and valid, use it
-  if (requestLocale && locales.includes(requestLocale as Locale)) {
-    locale = requestLocale as Locale;
-  }
+export default getRequestConfig(async () => {
+  // For static export, always use default locale at build time
+  // Client-side I18nProvider handles locale switching via cookies
+  const locale = defaultLocale;
 
   return {
     locale,

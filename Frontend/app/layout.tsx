@@ -1,7 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
 import { I18nProvider } from '../components/i18n-provider'
 import { defaultLocale } from '../i18n/config'
 import "./globals.css"
@@ -38,7 +37,6 @@ export default function RootLayout({
         <I18nProvider initialMessages={defaultMessages}>
           {children}
         </I18nProvider>
-        <Analytics />
       </body>
     </html>
   )
