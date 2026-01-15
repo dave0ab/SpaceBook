@@ -1,7 +1,6 @@
 'use client';
 
 import { useLocale } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -18,13 +17,13 @@ const languages = [
 
 export function LanguageSwitcher() {
   const locale = useLocale();
-  const router = useRouter();
 
   const changeLanguage = (newLocale: string) => {
     // Set cookie for persistence
     document.cookie = `NEXT_LOCALE=${newLocale};path=/;max-age=31536000`;
-    // Refresh the page to apply the new locale
-    router.refresh();
+    // For static export, use full page reload instead of router.refresh()
+    // router.refresh() makes RSC calls which don't work with static export
+    window.location.reload();
   };
 
   const currentLanguage = languages.find((lang) => lang.code === locale);

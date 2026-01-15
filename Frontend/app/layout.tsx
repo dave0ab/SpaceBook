@@ -2,9 +2,12 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
-import { NextIntlClientProvider } from 'next-intl'
+import { I18nProvider } from '../components/i18n-provider'
 import { defaultLocale } from '../i18n/config'
 import "./globals.css"
+
+// Import default messages for SSG
+import defaultMessages from '../messages/es.json'
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -22,23 +25,19 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   // For static export, use default locale during build
-  // Locale switching will be handled client-side via cookies
-  // Avoid using getLocale()/getMessages() as they use headers() which breaks static export
-  const locale = defaultLocale;
-  const messages = (await import(`../messages/${defaultLocale}.json`)).default;
-
+  // Client-side I18nProvider handles locale switching via cookies
   return (
-    <html lang={locale}>
+    <html lang={defaultLocale}>
       <body className={`${inter.className} font-sans antialiased`}>
-        <NextIntlClientProvider messages={messages}>
+        <I18nProvider initialMessages={defaultMessages}>
           {children}
-        </NextIntlClientProvider>
+        </I18nProvider>
         <Analytics />
       </body>
     </html>
