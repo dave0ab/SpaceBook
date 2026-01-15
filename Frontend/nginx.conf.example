@@ -1,0 +1,64 @@
+server {
+    server_name   spacebookpro.duckdns.org;
+    root /home/dev/SpaceBook/Frontend/out;
+    index index.html;
+
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+
+    # Gzip compression
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_types text/plain text/css text/xml text/javascript application/x-javascript application/xml+rss application/javascript application/json;
+
+    # Handle static files
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+    }
+
+    # Handle Next.js static export routes
+    location / {
+        # Try to serve the exact file first
+        try_files $uri $uri.html $uri/index.html /index.html;
+        
+        # Remove trailing slash if it exists and redirect
+        if (-d $request_filename) {
+            rewrite ^/(.*)([^/])$ /$1$2/ permanent;
+        }
+    }
+
+    # Handle routes with trailing slashes
+    location ~ ^(.+)/$ {
+        try_files $1 $1.html $1/index.html /index.html;
+    }
+
+    # Handle admin and user routes specifically
+    location ~ ^/(admin|user)/ {
+        try_files $uri $uri.html $uri/index.html /index.html;
+    }
+
+    access_log /var/log/nginx/spacebookpro.access.log;
+    error_log  /var/log/nginx/spacebookpro.error.log;
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/spacebookpro.duckdns.org/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/spacebookpro.duckdns.org/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+
+server {
+    if ($host = spacebookpro.duckdns.org) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    listen 80;
+    server_name   spacebookpro.duckdns.org;
+    return 404; # managed by Certbot
+}
+
