@@ -14,6 +14,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useAdminUsers } from "@/lib/hooks/use-admin"
 import { useCreateUser, useDeleteUser } from "@/lib/hooks/use-users"
 import { Plus, Trash2, User, Loader2 } from "lucide-react"
+import { useTranslations } from 'next-intl'
 
 export default function AdminUsersPage() {
   const { data: users = [], isLoading } = useAdminUsers()
@@ -21,6 +22,7 @@ export default function AdminUsersPage() {
   const deleteUser = useDeleteUser()
   const [open, setOpen] = useState(false)
   const [newUser, setNewUser] = useState({ name: "", email: "", password: "" })
+  const t = useTranslations()
 
   const regularUsers = users.filter((u) => u.role === "user")
 
@@ -42,7 +44,7 @@ export default function AdminUsersPage() {
   }
 
   const handleDeleteUser = async (userId: string) => {
-    if (confirm("Are you sure you want to delete this user?")) {
+    if (confirm(t('users.deleteConfirm'))) {
       try {
         await deleteUser.mutateAsync(userId)
       } catch (error) {
@@ -74,64 +76,64 @@ export default function AdminUsersPage() {
         <main className="flex-1 p-6">
           <Card className="bg-card border-border">
             <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>Users Management</CardTitle>
+              <CardTitle>{t('users.usersManagement')}</CardTitle>
               <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                   <Button className="gap-2">
                     <Plus className="h-4 w-4" />
-                    Add User
+                    {t('users.addUser')}
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="bg-card border-border">
                   <DialogHeader>
-                    <DialogTitle>Add New User</DialogTitle>
+                    <DialogTitle>{t('users.addUser')}</DialogTitle>
                   </DialogHeader>
                   <form onSubmit={handleAddUser} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Name</Label>
+                      <Label htmlFor="name">{t('users.name')}</Label>
                       <Input
                         id="name"
                         value={newUser.name}
                         onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-                        placeholder="Enter name"
+                        placeholder={t('users.enterName')}
                         className="bg-secondary border-border"
                         required
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
+                      <Label htmlFor="email">{t('common.email')}</Label>
                       <Input
                         id="email"
                         type="email"
                         value={newUser.email}
                         onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-                        placeholder="Enter email"
+                        placeholder={t('users.enterEmail')}
                         className="bg-secondary border-border"
                         required
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="password">Password</Label>
+                      <Label htmlFor="password">{t('common.password')}</Label>
                       <Input
                         id="password"
                         type="password"
                         value={newUser.password}
                         onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
-                        placeholder="Enter password (default: password123)"
+                        placeholder={t('users.enterPassword')}
                         className="bg-secondary border-border"
                       />
                       <p className="text-xs text-muted-foreground">
-                        Leave empty for default password: password123
+                        {t('users.leaveEmptyDefault')}
                       </p>
                     </div>
                     <Button type="submit" className="w-full" disabled={createUser.isPending}>
                       {createUser.isPending ? (
                         <>
                           <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                          Creating...
+                          {t('users.creating')}
                         </>
                       ) : (
-                        "Add User"
+                        t('users.addUser')
                       )}
                     </Button>
                   </form>
@@ -143,11 +145,11 @@ export default function AdminUsersPage() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Name</th>
-                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Email</th>
-                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Role</th>
-                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Status</th>
-                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Actions</th>
+                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">{t('users.name')}</th>
+                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">{t('common.email')}</th>
+                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">{t('users.role')}</th>
+                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">{t('booking.status')}</th>
+                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">{t('booking.actions')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -167,7 +169,7 @@ export default function AdminUsersPage() {
                         <td className="py-4 px-4 text-muted-foreground">{user.email}</td>
                         <td className="py-4 px-4">
                           <Badge variant="secondary" className="capitalize">
-                            {user.role}
+                            {user.role === 'admin' ? t('users.admin') : t('users.user')}
                           </Badge>
                         </td>
                         <td className="py-4 px-4">
@@ -178,7 +180,7 @@ export default function AdminUsersPage() {
                                 : "bg-muted text-muted-foreground border-0"
                             }
                           >
-                            {user.status}
+                            {user.status === 'active' ? t('users.active') : t('users.inactive')}
                           </Badge>
                         </td>
                         <td className="py-4 px-4">

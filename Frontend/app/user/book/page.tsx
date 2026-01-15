@@ -18,6 +18,7 @@ import { format, parse } from "date-fns"
 import { Calendar as CalendarIcon, Clock, Users, Search, CheckCircle, Loader2 } from "lucide-react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+import { useTranslations } from 'next-intl'
 
 // Time slots constant
 const timeSlots = [
@@ -27,6 +28,7 @@ const timeSlots = [
 
 function BookingContent() {
   const { user } = useAuth()
+  const t = useTranslations()
   
   // State declarations first
   const [selectedDate, setSelectedDate] = useState("")
@@ -105,8 +107,8 @@ function BookingContent() {
   return (
     <main className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Book a Space</h1>
-        <p className="text-muted-foreground">Search and book available spaces for your events</p>
+        <h1 className="text-3xl font-bold mb-2">{t('booking.bookSpace')}</h1>
+        <p className="text-muted-foreground">{t('booking.selectSpaceFirst')}</p>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-8">
@@ -117,13 +119,13 @@ function BookingContent() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Search className="h-5 w-5" />
-                Search Spaces
+                {t('common.search')} {t('spaces.spaces')}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="space-y-2">
-                  <Label>Date</Label>
+                  <Label>{t('booking.date')}</Label>
                   <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
                     <PopoverTrigger asChild>
                       <Button
@@ -134,7 +136,7 @@ function BookingContent() {
                         )}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {selectedDate ? format(parse(selectedDate, "yyyy-MM-dd", new Date()), "PPP") : "Pick a date"}
+                        {selectedDate ? format(parse(selectedDate, "yyyy-MM-dd", new Date()), "PPP") : t('filters.pickDate')}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
@@ -154,10 +156,10 @@ function BookingContent() {
                   </Popover>
                 </div>
                 <div className="space-y-2">
-                  <Label>Start Time</Label>
+                  <Label>{t('booking.startTime')}</Label>
                   <Select value={selectedTimeStart} onValueChange={setSelectedTimeStart}>
                     <SelectTrigger className="bg-secondary border-border">
-                      <SelectValue placeholder="Select time" />
+                      <SelectValue placeholder={t('booking.selectTime')} />
                     </SelectTrigger>
                     <SelectContent>
                       {timeSlots.map((time) => (
@@ -169,10 +171,10 @@ function BookingContent() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label>End Time</Label>
+                  <Label>{t('booking.endTime')}</Label>
                   <Select value={selectedTimeEnd} onValueChange={setSelectedTimeEnd}>
                     <SelectTrigger className="bg-secondary border-border">
-                      <SelectValue placeholder="Select time" />
+                      <SelectValue placeholder={t('booking.selectTime')} />
                     </SelectTrigger>
                     <SelectContent>
                       {timeSlots
@@ -186,16 +188,16 @@ function BookingContent() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label>Space Type</Label>
+                  <Label>{t('spaces.type')}</Label>
                   <Select value={selectedSpaceType} onValueChange={(v) => setSelectedSpaceType(v as SpaceType | "all")}>
                     <SelectTrigger className="bg-secondary border-border">
-                      <SelectValue placeholder="All types" />
+                      <SelectValue placeholder={t('filters.allSpaces')} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All Types</SelectItem>
-                      <SelectItem value="auditorium">Auditorium</SelectItem>
-                      <SelectItem value="gym">Gym</SelectItem>
-                      <SelectItem value="soccer">Soccer Fields</SelectItem>
+                      <SelectItem value="all">{t('filters.allSpaces')}</SelectItem>
+                      <SelectItem value="auditorium">{t('spaces.auditorium')}</SelectItem>
+                      <SelectItem value="gym">{t('spaces.gym')}</SelectItem>
+                      <SelectItem value="soccer">{t('spaces.soccer')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -205,14 +207,14 @@ function BookingContent() {
 
           {/* Available Spaces */}
           <div className="space-y-4">
-            <h2 className="text-xl font-semibold">Available Spaces</h2>
+            <h2 className="text-xl font-semibold">{t('spaces.allSpaces')}</h2>
             {spacesLoading ? (
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
               </div>
             ) : filteredSpaces.length === 0 ? (
               <div className="text-center py-12 text-muted-foreground">
-                <p>No spaces found. Try adjusting your filters.</p>
+                <p>{t('common.noResults')}</p>
               </div>
             ) : (
               <div className="grid sm:grid-cols-2 gap-4">
@@ -242,13 +244,13 @@ function BookingContent() {
                       />
                       <div className="absolute top-2 right-2">
                         {availability === "available" && (
-                          <Badge className="bg-status-approved/90 text-background border-0">Available</Badge>
+                          <Badge className="bg-status-approved/90 text-background border-0">{t('booking.approved')}</Badge>
                         )}
                         {availability === "pending" && (
-                          <Badge className="bg-status-pending/90 text-background border-0">Pending</Badge>
+                          <Badge className="bg-status-pending/90 text-background border-0">{t('booking.pending')}</Badge>
                         )}
                         {availability === "booked" && (
-                          <Badge className="bg-status-rejected/90 text-foreground border-0">Booked</Badge>
+                          <Badge className="bg-status-rejected/90 text-foreground border-0">{t('booking.rejected')}</Badge>
                         )}
                       </div>
                     </div>
@@ -261,7 +263,9 @@ function BookingContent() {
                           <span>{space.capacity}</span>
                         </div>
                         <Badge variant="secondary" className="capitalize">
-                          {space.type}
+                          {space.type === 'auditorium' ? t('spaces.auditorium') : 
+                           space.type === 'gym' ? t('spaces.gym') : 
+                           t('spaces.soccer')}
                         </Badge>
                       </div>
                     </CardContent>
@@ -277,7 +281,7 @@ function BookingContent() {
         <div className="lg:col-span-1">
           <Card className="bg-card border-border sticky top-24">
             <CardHeader>
-              <CardTitle>Booking Summary</CardTitle>
+              <CardTitle>{t('booking.bookingDetails')}</CardTitle>
             </CardHeader>
             <CardContent>
               {bookingSubmitted ? (
@@ -285,8 +289,8 @@ function BookingContent() {
                   <div className="w-16 h-16 rounded-full bg-status-approved/20 flex items-center justify-center mx-auto mb-4">
                     <CheckCircle className="h-8 w-8 text-status-approved" />
                   </div>
-                  <h3 className="font-semibold text-lg mb-2">Booking Submitted!</h3>
-                  <p className="text-muted-foreground">Your request is pending approval</p>
+                  <h3 className="font-semibold text-lg mb-2">{t('booking.bookingCreated')}</h3>
+                  <p className="text-muted-foreground">{t('booking.pending')}</p>
                 </div>
               ) : selectedSpaceData && selectedDate && selectedTimeStart && selectedTimeEnd ? (
                 <div className="space-y-6">
@@ -300,7 +304,7 @@ function BookingContent() {
                   </div>
                   <div className="space-y-4">
                     <div>
-                      <p className="text-sm text-muted-foreground">Space</p>
+                      <p className="text-sm text-muted-foreground">{t('booking.space')}</p>
                       <p className="font-semibold">{selectedSpaceData.name}</p>
                     </div>
                     <div className="flex items-center gap-2">
@@ -314,14 +318,14 @@ function BookingContent() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground mb-1">Status</p>
-                      <Badge className="bg-status-pending/20 text-status-pending border-0">Pending Approval</Badge>
+                      <p className="text-sm text-muted-foreground mb-1">{t('booking.status')}</p>
+                      <Badge className="bg-status-pending/20 text-status-pending border-0">{t('booking.pending')}</Badge>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="notes">Notes (optional)</Label>
+                      <Label htmlFor="notes">{t('booking.optionalNotes')}</Label>
                       <Input
                         id="notes"
-                        placeholder="Add any notes..."
+                        placeholder={t('booking.notesPlaceholder')}
                         value={notes}
                         onChange={(e) => setNotes(e.target.value)}
                         className="bg-secondary border-border"
@@ -336,17 +340,17 @@ function BookingContent() {
                     {createBooking.isPending ? (
                       <>
                         <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Submitting...
+                        {t('booking.submitting')}
                       </>
                     ) : (
-                      "Submit Booking Request"
+                      t('booking.submitRequest')
                     )}
                   </Button>
                 </div>
               ) : (
                 <div className="text-center py-8 text-muted-foreground">
                   <CalendarIcon className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>Select a date, time, and space to see your booking summary</p>
+                  <p>{t('booking.selectSpaceFirst')}</p>
                 </div>
               )}
             </CardContent>

@@ -9,10 +9,12 @@ import { useBookings } from "@/lib/hooks/use-bookings"
 import { Clock, CheckCircle, XCircle, Calendar, ArrowRight, Loader2 } from "lucide-react"
 import Link from "next/link"
 import { format } from "date-fns"
+import { useTranslations } from 'next-intl'
 
 export default function UserDashboardPage() {
   const { user } = useAuth()
   const { data: bookings = [], isLoading } = useBookings(undefined, user?.id)
+  const t = useTranslations()
 
   const pendingBookings = bookings.filter((b) => b.status === "pending")
   const approvedBookings = bookings.filter((b) => b.status === "approved")
@@ -20,21 +22,21 @@ export default function UserDashboardPage() {
 
   const stats = [
     {
-      label: "Pending Approval",
+      label: t('booking.pending'),
       value: pendingBookings.length,
       icon: Clock,
       color: "text-status-pending",
       bgColor: "bg-status-pending/20",
     },
     {
-      label: "Approved",
+      label: t('booking.approved'),
       value: approvedBookings.length,
       icon: CheckCircle,
       color: "text-status-approved",
       bgColor: "bg-status-approved/20",
     },
     {
-      label: "Rejected",
+      label: t('booking.rejected'),
       value: rejectedBookings.length,
       icon: XCircle,
       color: "text-status-rejected",
@@ -48,21 +50,21 @@ export default function UserDashboardPage() {
         return (
           <Badge className="bg-status-pending/20 text-status-pending border-0 gap-1">
             <Clock className="h-3 w-3" />
-            Pending
+            {t('booking.pending')}
           </Badge>
         )
       case "approved":
         return (
           <Badge className="bg-status-approved/20 text-status-approved border-0 gap-1">
             <CheckCircle className="h-3 w-3" />
-            Approved
+            {t('booking.approved')}
           </Badge>
         )
       case "rejected":
         return (
           <Badge className="bg-status-rejected/20 text-status-rejected border-0 gap-1">
             <XCircle className="h-3 w-3" />
-            Rejected
+            {t('booking.rejected')}
           </Badge>
         )
     }
@@ -74,8 +76,8 @@ export default function UserDashboardPage() {
       <main className="container mx-auto px-4 py-8">
         {/* Welcome */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Welcome back, {user?.name || "User"}!</h1>
-          <p className="text-muted-foreground">Manage your bookings and request new spaces</p>
+          <h1 className="text-3xl font-bold mb-2">{t('dashboard.welcomeBack')}, {user?.name || "User"}!</h1>
+          <p className="text-muted-foreground">{t('dashboard.hereIsOverview')}</p>
         </div>
 
         {/* Stats */}
@@ -102,7 +104,7 @@ export default function UserDashboardPage() {
           <Link href="/user/book">
             <Button size="lg" className="gap-2">
               <Calendar className="h-5 w-5" />
-              Book a Space
+              {t('booking.bookSpace')}
               <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
@@ -111,10 +113,10 @@ export default function UserDashboardPage() {
         {/* Recent Bookings */}
         <Card className="bg-card border-border">
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Your Recent Bookings</CardTitle>
+            <CardTitle>{t('booking.recentBookings')}</CardTitle>
             <Link href="/user/applications">
               <Button variant="outline" size="sm">
-                View All
+                {t('booking.viewAll')}
               </Button>
             </Link>
           </CardHeader>
@@ -126,10 +128,10 @@ export default function UserDashboardPage() {
             ) : bookings.length === 0 ? (
               <div className="text-center py-12">
                 <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="font-medium mb-2">No bookings yet</h3>
-                <p className="text-muted-foreground mb-4">Start by booking your first space</p>
+                <h3 className="font-medium mb-2">{t('booking.noBookings')}</h3>
+                <p className="text-muted-foreground mb-4">{t('applications.startBooking')}</p>
                 <Link href="/user/book">
-                  <Button>Book a Space</Button>
+                  <Button>{t('booking.bookSpace')}</Button>
                 </Link>
               </div>
             ) : (

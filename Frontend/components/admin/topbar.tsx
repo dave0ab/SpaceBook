@@ -13,12 +13,15 @@ import {
 import { useAuth } from "@/lib/providers/auth-provider"
 import { useNotifications, useUnreadNotificationCount } from "@/lib/hooks/use-notifications"
 import { NotificationTray } from "./notification-tray"
+import { useTranslations } from 'next-intl'
+import { LanguageSwitcher } from "@/components/language-switcher"
 
 export function AdminTopbar() {
   const { user: currentUser } = useAuth()
   const { data: notifications = [] } = useNotifications()
   const { data: unreadCount = 0 } = useUnreadNotificationCount()
   const [showNotifications, setShowNotifications] = useState(false)
+  const t = useTranslations()
 
   // Filter notifications for current admin user
   const adminNotifications = notifications.filter((n) => n.userId === currentUser?.id)
@@ -26,10 +29,13 @@ export function AdminTopbar() {
   return (
     <header className="h-16 bg-card border-b border-border px-6 flex items-center justify-between sticky top-0 z-40">
       <div>
-        <h1 className="text-lg font-semibold text-card-foreground">Admin Dashboard</h1>
+        <h1 className="text-lg font-semibold text-card-foreground">{t('dashboard.dashboard')}</h1>
       </div>
 
       <div className="flex items-center gap-4">
+        {/* Language Switcher */}
+        <LanguageSwitcher />
+
         {/* Notifications */}
         <div className="relative">
           <Button
@@ -62,10 +68,10 @@ export function AdminTopbar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem>Profile Settings</DropdownMenuItem>
+            <DropdownMenuItem>{t('topbar.profile')}</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <a href="/">Logout</a>
+              <a href="/">{t('topbar.logout')}</a>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

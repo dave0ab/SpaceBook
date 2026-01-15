@@ -7,11 +7,13 @@ import { useAdminBookings } from "@/lib/hooks/use-admin"
 import { useAdminUsers } from "@/lib/hooks/use-admin"
 import { useSpaces } from "@/lib/hooks/use-spaces"
 import { Loader2 } from "lucide-react"
+import { useTranslations } from 'next-intl'
 
 export default function AdminAnalyticsPage() {
   const { data: bookings = [], isLoading: bookingsLoading } = useAdminBookings()
   const { data: users = [], isLoading: usersLoading } = useAdminUsers()
   const { data: spaces = [], isLoading: spacesLoading } = useSpaces()
+  const t = useTranslations()
 
   if (bookingsLoading || usersLoading || spacesLoading) {
     return (
@@ -65,7 +67,7 @@ export default function AdminAnalyticsPage() {
             {/* Bookings Per Space */}
             <Card className="bg-card border-border">
               <CardHeader>
-                <CardTitle>Total Bookings per Space</CardTitle>
+                <CardTitle>{t('analytics.bookingsBySpace')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -96,7 +98,7 @@ export default function AdminAnalyticsPage() {
             {/* Bookings by User */}
             <Card className="bg-card border-border">
               <CardHeader>
-                <CardTitle>Top Users by Bookings</CardTitle>
+                <CardTitle>{t('users.users')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -107,7 +109,7 @@ export default function AdminAnalyticsPage() {
                           <span className="text-muted-foreground mr-2">#{index + 1}</span>
                           {user.name}
                         </span>
-                        <span className="text-sm text-muted-foreground">{user.count} bookings</span>
+                        <span className="text-sm text-muted-foreground">{user.count} {t('sidebar.bookings').toLowerCase()}</span>
                       </div>
                       <div className="h-3 bg-secondary rounded-full overflow-hidden">
                         <div
@@ -124,7 +126,7 @@ export default function AdminAnalyticsPage() {
             {/* Status Breakdown */}
             <Card className="bg-card border-border lg:col-span-2">
               <CardHeader>
-                <CardTitle>Booking Status Breakdown</CardTitle>
+                <CardTitle>{t('analytics.bookingsByStatus')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-col md:flex-row items-center gap-8">
@@ -177,7 +179,7 @@ export default function AdminAnalyticsPage() {
                     <div className="bg-secondary rounded-lg p-4 text-center">
                       <div className="flex items-center justify-center gap-2 mb-2">
                         <div className="w-3 h-3 rounded-full bg-status-approved" />
-                        <span className="text-sm font-medium">Approved</span>
+                        <span className="text-sm font-medium">{t('booking.approved')}</span>
                       </div>
                       <div className="text-3xl font-bold text-status-approved">{statusBreakdown.approved}</div>
                       <div className="text-sm text-muted-foreground">
@@ -187,7 +189,7 @@ export default function AdminAnalyticsPage() {
                     <div className="bg-secondary rounded-lg p-4 text-center">
                       <div className="flex items-center justify-center gap-2 mb-2">
                         <div className="w-3 h-3 rounded-full bg-status-pending" />
-                        <span className="text-sm font-medium">Pending</span>
+                        <span className="text-sm font-medium">{t('booking.pending')}</span>
                       </div>
                       <div className="text-3xl font-bold text-status-pending">{statusBreakdown.pending}</div>
                       <div className="text-sm text-muted-foreground">
@@ -197,7 +199,7 @@ export default function AdminAnalyticsPage() {
                     <div className="bg-secondary rounded-lg p-4 text-center">
                       <div className="flex items-center justify-center gap-2 mb-2">
                         <div className="w-3 h-3 rounded-full bg-status-rejected" />
-                        <span className="text-sm font-medium">Rejected</span>
+                        <span className="text-sm font-medium">{t('booking.rejected')}</span>
                       </div>
                       <div className="text-3xl font-bold text-status-rejected">{statusBreakdown.rejected}</div>
                       <div className="text-sm text-muted-foreground">

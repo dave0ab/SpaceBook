@@ -11,6 +11,8 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Building2, Lock, Mail, ArrowLeft } from "lucide-react"
 import { useAuth } from "@/lib/providers/auth-provider"
+import { useTranslations } from 'next-intl'
+import { LanguageSwitcher } from "@/components/language-switcher"
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("")
@@ -19,6 +21,7 @@ export default function AdminLoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const { login } = useAuth()
+  const t = useTranslations()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -30,7 +33,7 @@ export default function AdminLoginPage() {
       // Check if user is admin before redirecting
       // Navigation is handled in auth provider
     } catch (err: any) {
-      setError(err.message || "Invalid credentials. Please check your email and password.")
+      setError(err.message || t('auth.invalidCredentials'))
     } finally {
       setIsLoading(false)
     }
@@ -40,12 +43,13 @@ export default function AdminLoginPage() {
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <header className="border-b border-border">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 w-fit hover:opacity-80 transition-opacity">
             <ArrowLeft className="h-4 w-4" />
             <Building2 className="h-6 w-6 text-primary" />
-            <span className="font-semibold">SpaceBook</span>
+            <span className="font-semibold">{t('common.appName')}</span>
           </Link>
+          <LanguageSwitcher />
         </div>
       </header>
 
@@ -56,14 +60,14 @@ export default function AdminLoginPage() {
             <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
               <Lock className="h-8 w-8 text-primary" />
             </div>
-            <CardTitle className="text-2xl">Admin Portal</CardTitle>
-            <CardDescription>Sign in to manage bookings and users</CardDescription>
+            <CardTitle className="text-2xl">{t('auth.adminPortal')}</CardTitle>
+            <CardDescription>{t('auth.adminDescription')}</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
               {error && <div className="p-3 rounded-lg bg-destructive/10 text-destructive text-sm">{error}</div>}
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t('common.email')}</Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -78,7 +82,7 @@ export default function AdminLoginPage() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t('common.password')}</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -93,9 +97,9 @@ export default function AdminLoginPage() {
                 </div>
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Signing in..." : "Sign In"}
+                {isLoading ? t('common.signingIn') : t('common.signIn')}
               </Button>
-              <p className="text-center text-sm text-muted-foreground">Demo: admin@spacebook.com / admin123</p>
+              <p className="text-center text-sm text-muted-foreground">{t('auth.demo')}: admin@spacebook.com / admin123</p>
             </form>
           </CardContent>
         </Card>

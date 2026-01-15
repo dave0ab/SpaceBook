@@ -9,10 +9,12 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
+import { useTranslations } from 'next-intl'
 
 export default function AdminDashboardPage() {
   const { data: bookings = [], isLoading: bookingsLoading } = useAdminBookings()
   const { data: users = [], isLoading: usersLoading } = useAdminUsers()
+  const t = useTranslations()
 
   const pendingBookings = bookings.filter((b) => b.status === "pending")
   const approvedBookings = bookings.filter((b) => b.status === "approved")
@@ -20,25 +22,25 @@ export default function AdminDashboardPage() {
 
   const stats = [
     {
-      label: "Total Bookings",
+      label: t('dashboard.totalBookings'),
       value: bookings.length,
       icon: ClipboardList,
       color: "text-primary",
     },
     {
-      label: "Pending Requests",
+      label: t('dashboard.pendingRequests'),
       value: pendingBookings.length,
       icon: Clock,
       color: "text-status-pending",
     },
     {
-      label: "Approved",
+      label: t('booking.approved'),
       value: approvedBookings.length,
       icon: CheckCircle,
       color: "text-status-approved",
     },
     {
-      label: "Total Users",
+      label: t('dashboard.totalUsers'),
       value: totalUsers,
       icon: Users,
       color: "text-chart-2",
@@ -87,10 +89,10 @@ export default function AdminDashboardPage() {
           {/* Recent Booking Requests */}
           <Card className="bg-card border-border">
             <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>Recent Booking Requests</CardTitle>
+              <CardTitle>{t('booking.recentBookings')}</CardTitle>
               <Link href="/admin/bookings">
                 <Button variant="outline" size="sm">
-                  View All
+                  {t('booking.viewAll')}
                 </Button>
               </Link>
             </CardHeader>
@@ -110,12 +112,12 @@ export default function AdminDashboardPage() {
                       </div>
                     </div>
                     <Badge variant="secondary" className="bg-status-pending/20 text-status-pending">
-                      Pending
+                      {t('booking.pending')}
                     </Badge>
                   </div>
                 ))}
                 {pendingBookings.length === 0 && (
-                  <p className="text-center text-muted-foreground py-8">No pending booking requests</p>
+                  <p className="text-center text-muted-foreground py-8">{t('booking.noBookings')}</p>
                 )}
               </div>
             </CardContent>

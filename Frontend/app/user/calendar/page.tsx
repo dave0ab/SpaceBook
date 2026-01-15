@@ -12,11 +12,13 @@ import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMont
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { BookingStatus } from "@/lib/types"
+import { useTranslations } from 'next-intl'
 
 export default function UserCalendarPage() {
   const { user: currentUser } = useAuth()
   const [currentDate, setCurrentDate] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
+  const t = useTranslations()
 
   const monthStart = startOfMonth(currentDate)
   const monthEnd = endOfMonth(currentDate)
@@ -98,8 +100,8 @@ export default function UserCalendarPage() {
       <UserHeader />
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">My Calendar</h1>
-          <p className="text-muted-foreground">View your approved and pending bookings</p>
+          <h1 className="text-3xl font-bold mb-2">{t('calendar.calendar')}</h1>
+          <p className="text-muted-foreground">{t('booking.upcomingBookings')}</p>
         </div>
 
         <Card className="bg-card border-border">
@@ -126,7 +128,7 @@ export default function UserCalendarPage() {
                   }
                 }, 100)
               }}>
-                Today
+                {t('calendar.today')}
               </Button>
               <Button variant="outline" size="icon" onClick={() => {
                 console.log('📅 Navigating to next month')
@@ -142,14 +144,11 @@ export default function UserCalendarPage() {
             <div className="flex items-center gap-6 mb-6 flex-wrap">
               <div className="flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 text-status-approved" />
-                <span className="text-sm text-muted-foreground">Approved</span>
+                <span className="text-sm text-muted-foreground">{t('booking.approved')}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4 text-status-pending" />
-                <span className="text-sm text-muted-foreground">Pending</span>
-              </div>
-              <div className="flex items-center gap-2 ml-auto">
-                <span className="text-sm text-muted-foreground">Click a day to view details</span>
+                <span className="text-sm text-muted-foreground">{t('booking.pending')}</span>
               </div>
             </div>
 
@@ -221,7 +220,7 @@ export default function UserCalendarPage() {
                         <div className="text-center">
                           <div className="text-xl font-bold text-primary">{bookingCount}</div>
                           <div className="text-xs text-muted-foreground">
-                            {bookingCount === 1 ? 'booking' : 'bookings'}
+                            {bookingCount === 1 ? t('sidebar.bookings').toLowerCase().slice(0, -1) : t('sidebar.bookings').toLowerCase()}
                           </div>
                         </div>
                       ) : (
@@ -241,9 +240,9 @@ export default function UserCalendarPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Calendar className="h-5 w-5" />
-                My Bookings for {format(selectedDate, "EEEE, MMMM d, yyyy")}
+                {t('calendar.bookingsFor')} {format(selectedDate, "EEEE, MMMM d, yyyy")}
                 <Badge variant="secondary" className="ml-auto">
-                  {selectedDateBookings.length} {selectedDateBookings.length === 1 ? 'booking' : 'bookings'}
+                  {selectedDateBookings.length} {selectedDateBookings.length === 1 ? t('sidebar.bookings').toLowerCase().slice(0, -1) : t('sidebar.bookings').toLowerCase()}
                 </Badge>
               </CardTitle>
             </CardHeader>
@@ -251,7 +250,7 @@ export default function UserCalendarPage() {
               {selectedDateBookings.length === 0 ? (
                 <div className="text-center py-12 text-muted-foreground">
                   <Calendar className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>No bookings on this date</p>
+                  <p>{t('calendar.noBookingsDate')}</p>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -289,17 +288,13 @@ export default function UserCalendarPage() {
                                       <span>{format(new Date(bookingDate), "MMMM d, yyyy")}</span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                      <span className="font-medium">Capacity:</span>
-                                      <span>{space?.capacity || 'N/A'} people</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                      <span className="font-medium">Description:</span>
-                                      <span className="truncate">{space?.description || 'N/A'}</span>
+                                      <span className="font-medium">{t('spaces.capacity')}:</span>
+                                      <span>{space?.capacity || 'N/A'} {t('spaces.people')}</span>
                                     </div>
                                   </div>
                                   {booking.notes && (
                                     <div className="mt-3 p-3 bg-secondary/50 rounded-lg">
-                                      <p className="text-sm font-medium mb-1">My Notes:</p>
+                                      <p className="text-sm font-medium mb-1">{t('booking.notes')}:</p>
                                       <p className="text-sm text-muted-foreground">{booking.notes}</p>
                                     </div>
                                   )}
@@ -314,11 +309,15 @@ export default function UserCalendarPage() {
                                 )}>
                                   <div className="flex items-center gap-1">
                                     {getStatusIcon(booking.status)}
-                                    <span className="capitalize">{booking.status}</span>
+                                    <span className="capitalize">
+                                      {booking.status === 'approved' ? t('booking.approved') : 
+                                       booking.status === 'pending' ? t('booking.pending') : 
+                                       t('booking.rejected')}
+                                    </span>
                                   </div>
                                 </Badge>
                                 <div className="text-xs text-muted-foreground">
-                                  Created: {format(new Date(booking.createdAt), "MMM d, yyyy")}
+                                  {format(new Date(booking.createdAt), "MMM d, yyyy")}
                                 </div>
                               </div>
                             </div>
@@ -328,76 +327,6 @@ export default function UserCalendarPage() {
                     })}
                 </div>
               )}
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Upcoming Bookings Summary - Hidden for now since we only fetch selected date */}
-        {false && (
-          <Card className="bg-card border-border mt-8">
-            <CardHeader>
-              <CardTitle>All My Bookings</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {[]
-                  .filter((b) => {
-                    const bookingDate = typeof b.date === 'string' ? b.date : b.date;
-                    return new Date(bookingDate) >= new Date();
-                  })
-                  .sort((a, b) => {
-                    const dateA = typeof a.date === 'string' ? a.date : a.date;
-                    const dateB = typeof b.date === 'string' ? b.date : b.date;
-                    return new Date(dateA).getTime() - new Date(dateB).getTime();
-                  })
-                  .slice(0, 5)
-                  .map((booking) => {
-                    const space = booking.space
-                    const bookingDate = typeof booking.date === 'string' ? booking.date : booking.date
-                    return (
-                      <div
-                        key={booking.id}
-                        className="flex items-center justify-between p-3 rounded-lg bg-secondary/50 cursor-pointer hover:bg-secondary transition-colors"
-                        onClick={() => {
-                          setCurrentDate(new Date(bookingDate))
-                          setSelectedDate(new Date(bookingDate))
-                          // Scroll to details section after a short delay
-                          setTimeout(() => {
-                            const detailsSection = document.getElementById('selected-date-details')
-                            if (detailsSection) {
-                              detailsSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                            }
-                          }, 150)
-                        }}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div
-                            className={cn(
-                              "w-2 h-10 rounded-full",
-                              booking.status === "approved" ? "bg-status-approved" : "bg-status-pending",
-                            )}
-                          />
-                          <div>
-                            <p className="font-medium">{space?.name || 'Unknown Space'}</p>
-                            <p className="text-sm text-muted-foreground">
-                              {format(new Date(bookingDate), "EEE, MMM d")} • {booking.startTime} - {booking.endTime}
-                            </p>
-                          </div>
-                        </div>
-                        <Badge
-                          className={cn(
-                            "border-0",
-                            booking.status === "approved"
-                              ? "bg-status-approved/20 text-status-approved"
-                              : "bg-status-pending/20 text-status-pending",
-                          )}
-                        >
-                          {booking.status}
-                        </Badge>
-                      </div>
-                    )
-                  })}
-              </div>
             </CardContent>
           </Card>
         )}

@@ -16,13 +16,8 @@ import { useAuth } from "@/lib/providers/auth-provider"
 import { useNotifications, useUnreadNotificationCount } from "@/lib/hooks/use-notifications"
 import { NotificationTray } from "@/components/admin/notification-tray"
 import { cn } from "@/lib/utils"
-
-const navItems = [
-  { href: "/user/dashboard", label: "Dashboard" },
-  { href: "/user/book", label: "Book Space" },
-  { href: "/user/calendar", label: "My Calendar" },
-  { href: "/user/applications", label: "Applications" },
-]
+import { useTranslations } from 'next-intl'
+import { LanguageSwitcher } from "@/components/language-switcher"
 
 export function UserHeader() {
   const pathname = usePathname()
@@ -31,6 +26,14 @@ export function UserHeader() {
   const { data: unreadCount = 0 } = useUnreadNotificationCount()
   const [showNotifications, setShowNotifications] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const t = useTranslations()
+
+  const navItems = [
+    { href: "/user/dashboard", label: t('sidebar.dashboard') },
+    { href: "/user/book", label: t('sidebar.book') },
+    { href: "/user/calendar", label: t('calendar.calendar') },
+    { href: "/user/applications", label: t('sidebar.myApplications') },
+  ]
 
   const handleLogout = async () => {
     await logout()
@@ -43,7 +46,7 @@ export function UserHeader() {
           {/* Logo */}
           <Link href="/user/dashboard" className="flex items-center gap-2">
             <Building2 className="h-7 w-7 text-primary" />
-            <span className="text-xl font-bold">SpaceBook</span>
+            <span className="text-xl font-bold">{t('common.appName')}</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -66,6 +69,9 @@ export function UserHeader() {
 
           {/* Right Side */}
           <div className="flex items-center gap-2">
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+
             {/* Notifications */}
             <div className="relative">
               <Button
@@ -98,10 +104,10 @@ export function UserHeader() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem>Profile Settings</DropdownMenuItem>
+                <DropdownMenuItem>{t('topbar.profile')}</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>
-                  Logout
+                  {t('topbar.logout')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

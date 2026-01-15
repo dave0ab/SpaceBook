@@ -4,17 +4,19 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { LayoutDashboard, Calendar, ClipboardList, Users, BarChart3, Building2, LogOut } from "lucide-react"
-
-const navItems = [
-  { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/admin/calendar", label: "Calendar", icon: Calendar },
-  { href: "/admin/bookings", label: "Bookings", icon: ClipboardList },
-  { href: "/admin/users", label: "Users", icon: Users },
-  { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
-]
+import { useTranslations } from 'next-intl'
 
 export function AdminSidebar() {
   const pathname = usePathname()
+  const t = useTranslations()
+
+  const navItems = [
+    { href: "/admin/dashboard", label: t('sidebar.dashboard'), icon: LayoutDashboard },
+    { href: "/admin/calendar", label: t('sidebar.calendar'), icon: Calendar },
+    { href: "/admin/bookings", label: t('sidebar.bookings'), icon: ClipboardList },
+    { href: "/admin/users", label: t('sidebar.users'), icon: Users },
+    { href: "/admin/analytics", label: t('sidebar.analytics'), icon: BarChart3 },
+  ]
 
   return (
     <aside className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col h-screen sticky top-0">
@@ -22,7 +24,7 @@ export function AdminSidebar() {
       <div className="p-6 border-b border-sidebar-border">
         <Link href="/admin/dashboard" className="flex items-center gap-2">
           <Building2 className="h-8 w-8 text-primary" />
-          <span className="text-xl font-bold text-sidebar-foreground">SpaceBook</span>
+          <span className="text-xl font-bold text-sidebar-foreground">{t('common.appName')}</span>
         </Link>
       </div>
 
@@ -55,7 +57,7 @@ export function AdminSidebar() {
           className="flex items-center gap-3 px-4 py-3 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
         >
           <LogOut className="h-5 w-5" />
-          <span className="font-medium">Logout</span>
+          <span className="font-medium">{t('sidebar.logout')}</span>
         </Link>
       </div>
     </aside>

@@ -24,6 +24,7 @@ import { format } from "date-fns"
 import { Check, X, Loader2, Search, CalendarIcon, Filter, XCircle } from "lucide-react"
 import type { BookingStatus } from "@/lib/types"
 import { useState, useMemo } from "react"
+import { useTranslations } from 'next-intl'
 
 const ITEMS_PER_PAGE = 10
 
@@ -31,6 +32,7 @@ export default function AdminBookingsPage() {
   const { data: bookings = [], isLoading } = useAdminBookings()
   const { data: spaces = [] } = useSpaces()
   const updateStatus = useUpdateBookingStatus()
+  const t = useTranslations()
 
   // Filter states
   const [searchQuery, setSearchQuery] = useState("")
@@ -46,11 +48,11 @@ export default function AdminBookingsPage() {
   const getStatusBadge = (status: BookingStatus) => {
     switch (status) {
       case "pending":
-        return <Badge className="bg-status-pending/20 text-status-pending border-0">Pending</Badge>
+        return <Badge className="bg-status-pending/20 text-status-pending border-0">{t('booking.pending')}</Badge>
       case "approved":
-        return <Badge className="bg-status-approved/20 text-status-approved border-0">Approved</Badge>
+        return <Badge className="bg-status-approved/20 text-status-approved border-0">{t('booking.approved')}</Badge>
       case "rejected":
-        return <Badge className="bg-status-rejected/20 text-status-rejected border-0">Rejected</Badge>
+        return <Badge className="bg-status-rejected/20 text-status-rejected border-0">{t('booking.rejected')}</Badge>
     }
   }
 
@@ -156,9 +158,9 @@ export default function AdminBookingsPage() {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle>Booking Requests</CardTitle>
+              <CardTitle>{t('booking.bookingRequests')}</CardTitle>
                   <p className="text-sm text-muted-foreground mt-1">
-                    {filteredBookings.length} {filteredBookings.length === 1 ? 'booking' : 'bookings'} found
+                    {filteredBookings.length} {t('filters.bookingsFound')}
                   </p>
                 </div>
                 {hasActiveFilters && (
@@ -169,7 +171,7 @@ export default function AdminBookingsPage() {
                     className="gap-2"
                   >
                     <XCircle className="h-4 w-4" />
-                    Clear Filters
+                    {t('common.clearFilters')}
                   </Button>
                 )}
               </div>
@@ -182,7 +184,7 @@ export default function AdminBookingsPage() {
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
-                      placeholder="Search by user or space..."
+                      placeholder={t('filters.searchPlaceholder')}
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="pl-9"
@@ -192,23 +194,23 @@ export default function AdminBookingsPage() {
                   {/* Status Filter */}
                   <Select value={statusFilter} onValueChange={setStatusFilter}>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Filter by status" />
+                      <SelectValue placeholder={t('filters.status')} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All Status</SelectItem>
-                      <SelectItem value="pending">Pending</SelectItem>
-                      <SelectItem value="approved">Approved</SelectItem>
-                      <SelectItem value="rejected">Rejected</SelectItem>
+                      <SelectItem value="all">{t('filters.allStatus')}</SelectItem>
+                      <SelectItem value="pending">{t('booking.pending')}</SelectItem>
+                      <SelectItem value="approved">{t('booking.approved')}</SelectItem>
+                      <SelectItem value="rejected">{t('booking.rejected')}</SelectItem>
                     </SelectContent>
                   </Select>
 
                   {/* Space Filter */}
                   <Select value={spaceFilter} onValueChange={setSpaceFilter}>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Filter by space" />
+                      <SelectValue placeholder={t('filters.space')} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All Spaces</SelectItem>
+                      <SelectItem value="all">{t('filters.allSpaces')}</SelectItem>
                       {spaces.map((space) => (
                         <SelectItem key={space.id} value={space.id}>
                           {space.name}
@@ -225,7 +227,7 @@ export default function AdminBookingsPage() {
                         className={`w-full justify-start text-left font-normal ${!dateFilter && "text-muted-foreground"}`}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {dateFilter ? format(dateFilter, "MMM d, yyyy") : "Pick a date"}
+                        {dateFilter ? format(dateFilter, "MMM d, yyyy") : t('filters.pickDate')}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
@@ -242,10 +244,10 @@ export default function AdminBookingsPage() {
                 {/* Active Filters Display */}
                 {hasActiveFilters && (
                   <div className="flex flex-wrap gap-2 items-center text-sm">
-                    <span className="text-muted-foreground">Active filters:</span>
+                    <span className="text-muted-foreground">{t('filters.activeFilters')}:</span>
                     {searchQuery && (
                       <Badge variant="secondary" className="gap-1">
-                        Search: {searchQuery}
+                        {t('filters.search')}: {searchQuery}
                         <XCircle 
                           className="h-3 w-3 cursor-pointer" 
                           onClick={() => setSearchQuery("")}
@@ -254,7 +256,7 @@ export default function AdminBookingsPage() {
                     )}
                     {statusFilter !== "all" && (
                       <Badge variant="secondary" className="gap-1">
-                        Status: {statusFilter}
+                        {t('filters.status')}: {statusFilter}
                         <XCircle 
                           className="h-3 w-3 cursor-pointer" 
                           onClick={() => setStatusFilter("all")}
@@ -263,7 +265,7 @@ export default function AdminBookingsPage() {
                     )}
                     {spaceFilter !== "all" && (
                       <Badge variant="secondary" className="gap-1">
-                        Space: {spaces.find(s => s.id === spaceFilter)?.name}
+                        {t('filters.space')}: {spaces.find(s => s.id === spaceFilter)?.name}
                         <XCircle 
                           className="h-3 w-3 cursor-pointer" 
                           onClick={() => setSpaceFilter("all")}
@@ -272,7 +274,7 @@ export default function AdminBookingsPage() {
                     )}
                     {dateFilter && (
                       <Badge variant="secondary" className="gap-1">
-                        Date: {format(dateFilter, "MMM d, yyyy")}
+                        {t('filters.date')}: {format(dateFilter, "MMM d, yyyy")}
                         <XCircle 
                           className="h-3 w-3 cursor-pointer" 
                           onClick={() => setDateFilter(undefined)}
@@ -292,7 +294,7 @@ export default function AdminBookingsPage() {
                 <div className="text-center py-12">
                   <Filter className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
                   <p className="text-lg font-medium text-muted-foreground">
-                    {hasActiveFilters ? "No bookings match your filters" : "No bookings found"}
+                    {hasActiveFilters ? t('common.noResults') : t('booking.noBookings')}
                   </p>
                   {hasActiveFilters && (
                     <Button
@@ -300,87 +302,87 @@ export default function AdminBookingsPage() {
                       onClick={clearFilters}
                       className="mt-2"
                     >
-                      Clear all filters
+                      {t('common.clearFilters')}
                     </Button>
                   )}
                 </div>
               ) : (
                 <>
                   <div className="overflow-x-auto rounded-md border border-border">
-                    <table className="w-full">
-                      <thead>
+                  <table className="w-full">
+                    <thead>
                         <tr className="border-b border-border bg-muted/30">
-                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">User</th>
-                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Space</th>
-                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Date</th>
-                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Time</th>
-                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Status</th>
-                          <th className="text-left py-3 px-4 font-medium text-muted-foreground">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
+                        <th className="text-left py-3 px-4 font-medium text-muted-foreground">{t('booking.user')}</th>
+                        <th className="text-left py-3 px-4 font-medium text-muted-foreground">{t('booking.space')}</th>
+                        <th className="text-left py-3 px-4 font-medium text-muted-foreground">{t('booking.date')}</th>
+                        <th className="text-left py-3 px-4 font-medium text-muted-foreground">{t('booking.time')}</th>
+                        <th className="text-left py-3 px-4 font-medium text-muted-foreground">{t('booking.status')}</th>
+                        <th className="text-left py-3 px-4 font-medium text-muted-foreground">{t('booking.actions')}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
                         {paginatedBookings.map((booking) => (
-                          <tr
-                            key={booking.id}
-                            className="border-b border-border last:border-0 hover:bg-muted/30 transition-colors"
-                          >
-                            <td className="py-4 px-4">
-                              <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-sm font-medium">
-                                  {booking.user?.name?.charAt(0) || '?'}
-                                </div>
-                                <div>
-                                  <p className="font-medium">{booking.user?.name || 'Unknown User'}</p>
-                                  <p className="text-sm text-muted-foreground">{booking.user?.email || 'N/A'}</p>
-                                </div>
+                        <tr
+                          key={booking.id}
+                          className="border-b border-border last:border-0 hover:bg-muted/30 transition-colors"
+                        >
+                          <td className="py-4 px-4">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-sm font-medium">
+                                {booking.user?.name?.charAt(0) || '?'}
                               </div>
-                            </td>
-                            <td className="py-4 px-4">
-                              <p className="font-medium">{booking.space?.name || 'Unknown Space'}</p>
-                              <p className="text-sm text-muted-foreground capitalize">{booking.space?.type || 'N/A'}</p>
-                            </td>
-                            <td className="py-4 px-4">{format(new Date(booking.date), "MMM d, yyyy")}</td>
-                            <td className="py-4 px-4">
-                              {booking.startTime} - {booking.endTime}
-                            </td>
-                            <td className="py-4 px-4">{getStatusBadge(booking.status)}</td>
-                            <td className="py-4 px-4">
-                              {booking.status === "pending" && (
-                                <div className="flex items-center gap-2">
-                                  <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="gap-1 border-status-approved text-status-approved hover:bg-status-approved hover:text-background bg-transparent"
-                                    onClick={() => handleStatusUpdate(booking.id, "approved")}
-                                    disabled={updateStatus.isPending}
-                                  >
-                                    <Check className="h-4 w-4" />
-                                    Approve
-                                  </Button>
-                                  <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="gap-1 border-status-rejected text-status-rejected hover:bg-status-rejected hover:text-foreground bg-transparent"
-                                    onClick={() => handleStatusUpdate(booking.id, "rejected")}
-                                    disabled={updateStatus.isPending}
-                                  >
-                                    <X className="h-4 w-4" />
-                                    Reject
-                                  </Button>
-                                </div>
-                              )}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
+                              <div>
+                                <p className="font-medium">{booking.user?.name || 'Unknown User'}</p>
+                                <p className="text-sm text-muted-foreground">{booking.user?.email || 'N/A'}</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-4 px-4">
+                            <p className="font-medium">{booking.space?.name || 'Unknown Space'}</p>
+                            <p className="text-sm text-muted-foreground capitalize">{booking.space?.type || 'N/A'}</p>
+                          </td>
+                          <td className="py-4 px-4">{format(new Date(booking.date), "MMM d, yyyy")}</td>
+                          <td className="py-4 px-4">
+                            {booking.startTime} - {booking.endTime}
+                          </td>
+                          <td className="py-4 px-4">{getStatusBadge(booking.status)}</td>
+                          <td className="py-4 px-4">
+                            {booking.status === "pending" && (
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="gap-1 border-status-approved text-status-approved hover:bg-status-approved hover:text-background bg-transparent"
+                                  onClick={() => handleStatusUpdate(booking.id, "approved")}
+                                  disabled={updateStatus.isPending}
+                                >
+                                  <Check className="h-4 w-4" />
+                                  {t('booking.approve')}
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="gap-1 border-status-rejected text-status-rejected hover:bg-status-rejected hover:text-foreground bg-transparent"
+                                  onClick={() => handleStatusUpdate(booking.id, "rejected")}
+                                  disabled={updateStatus.isPending}
+                                >
+                                  <X className="h-4 w-4" />
+                                  {t('booking.reject')}
+                                </Button>
+                              </div>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
 
                   {/* Pagination - Only show when there are multiple pages */}
                   {filteredBookings.length > 0 && totalPages > 1 && (
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 pt-4 border-t border-border">
                       <div className="text-sm text-muted-foreground">
-                        Showing <span className="font-medium">{((currentPage - 1) * ITEMS_PER_PAGE) + 1}</span> to <span className="font-medium">{Math.min(currentPage * ITEMS_PER_PAGE, filteredBookings.length)}</span> of <span className="font-medium">{filteredBookings.length}</span> bookings
+                        {t('filters.showing')} <span className="font-medium">{((currentPage - 1) * ITEMS_PER_PAGE) + 1}</span> {t('filters.to')} <span className="font-medium">{Math.min(currentPage * ITEMS_PER_PAGE, filteredBookings.length)}</span> {t('filters.of')} <span className="font-medium">{filteredBookings.length}</span> {t('sidebar.bookings').toLowerCase()}
                       </div>
                       <Pagination>
                         <PaginationContent>
@@ -433,7 +435,7 @@ export default function AdminBookingsPage() {
                   {/* Show result count when single page with results */}
                   {filteredBookings.length > 0 && totalPages <= 1 && (
                     <div className="mt-6 pt-4 border-t border-border text-center text-sm text-muted-foreground">
-                      Showing all <span className="font-medium">{filteredBookings.length}</span> {filteredBookings.length === 1 ? 'booking' : 'bookings'}
+                      {t('pagination.showingAll')} <span className="font-medium">{filteredBookings.length}</span> {t('sidebar.bookings').toLowerCase()}
                     </div>
                   )}
                 </>

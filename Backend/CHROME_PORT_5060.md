@@ -49,3 +49,14 @@ chrome.exe --explicitly-allowed-ports=5060
 After launching Chrome with the flag, the frontend should connect to the backend on port 5060 without errors.
 
 
+
+
+
+
+
+
+
+
+
+
+

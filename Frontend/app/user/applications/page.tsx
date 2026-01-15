@@ -12,11 +12,13 @@ import { Loader2 } from "lucide-react"
 import type { BookingStatus } from "@/lib/types"
 import { format } from "date-fns"
 import { Clock, CheckCircle, XCircle, Calendar, Building2 } from "lucide-react"
+import { useTranslations } from 'next-intl'
 
 export default function UserApplicationsPage() {
   const { user: currentUser } = useAuth()
   const { data: bookings = [], isLoading } = useBookings(undefined, currentUser?.id)
   const [activeTab, setActiveTab] = useState<BookingStatus | "all">("all")
+  const t = useTranslations()
 
   const userBookings = bookings
 
@@ -39,21 +41,21 @@ export default function UserApplicationsPage() {
         return (
           <Badge className="bg-status-pending/20 text-status-pending border-0 gap-1">
             <Clock className="h-3 w-3" />
-            Pending Approval
+            {t('booking.pending')}
           </Badge>
         )
       case "approved":
         return (
           <Badge className="bg-status-approved/20 text-status-approved border-0 gap-1">
             <CheckCircle className="h-3 w-3" />
-            Approved
+            {t('booking.approved')}
           </Badge>
         )
       case "rejected":
         return (
           <Badge className="bg-status-rejected/20 text-status-rejected border-0 gap-1">
             <XCircle className="h-3 w-3" />
-            Rejected
+            {t('booking.rejected')}
           </Badge>
         )
     }
@@ -82,23 +84,23 @@ export default function UserApplicationsPage() {
       <UserHeader />
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">My Applications</h1>
-          <p className="text-muted-foreground">View and track all your booking requests</p>
+          <h1 className="text-3xl font-bold mb-2">{t('applications.myApplications')}</h1>
+          <p className="text-muted-foreground">{t('applications.applicationHistory')}</p>
         </div>
 
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as BookingStatus | "all")}>
           <TabsList className="mb-6">
             <TabsTrigger value="all" className="gap-2">
-              All <span className="text-muted-foreground">({counts.all})</span>
+              {t('filters.allStatus')} <span className="text-muted-foreground">({counts.all})</span>
             </TabsTrigger>
             <TabsTrigger value="pending" className="gap-2">
-              Pending <span className="text-muted-foreground">({counts.pending})</span>
+              {t('booking.pending')} <span className="text-muted-foreground">({counts.pending})</span>
             </TabsTrigger>
             <TabsTrigger value="approved" className="gap-2">
-              Approved <span className="text-muted-foreground">({counts.approved})</span>
+              {t('booking.approved')} <span className="text-muted-foreground">({counts.approved})</span>
             </TabsTrigger>
             <TabsTrigger value="rejected" className="gap-2">
-              Rejected <span className="text-muted-foreground">({counts.rejected})</span>
+              {t('booking.rejected')} <span className="text-muted-foreground">({counts.rejected})</span>
             </TabsTrigger>
           </TabsList>
 
@@ -107,12 +109,12 @@ export default function UserApplicationsPage() {
               <Card className="bg-card border-border">
                 <CardContent className="py-12 text-center">
                   <Building2 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="font-medium mb-2">No applications found</h3>
+                  <h3 className="font-medium mb-2">{t('applications.noApplications')}</h3>
                   <p className="text-muted-foreground mb-4">
-                    {activeTab === "all" ? "You haven't made any booking requests yet" : `No ${activeTab} applications`}
+                    {t('applications.startBooking')}
                   </p>
                   <Button asChild>
-                    <a href="/user/book">Book a Space</a>
+                    <a href="/user/book">{t('booking.bookSpace')}</a>
                   </Button>
                 </CardContent>
               </Card>
@@ -150,7 +152,7 @@ export default function UserApplicationsPage() {
                                 </div>
                               </div>
                               {booking.notes && (
-                                <p className="text-sm text-muted-foreground mt-2">Notes: {booking.notes}</p>
+                                <p className="text-sm text-muted-foreground mt-2">{t('booking.notes')}: {booking.notes}</p>
                               )}
                             </div>
                           </div>
