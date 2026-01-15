@@ -13,7 +13,7 @@ import {
 import { useAuth } from "@/lib/providers/auth-provider"
 import { useNotifications, useUnreadNotificationCount } from "@/lib/hooks/use-notifications"
 import { NotificationTray } from "./notification-tray"
-import { useTranslations } from 'next-intl'
+import { useTranslations } from '@/lib/i18n'
 import { LanguageSwitcher } from "@/components/language-switcher"
 
 export function AdminTopbar() {

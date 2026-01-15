@@ -1,6 +1,6 @@
 'use client';
 
-import { useLocale } from 'next-intl';
+import { useLocale, useChangeLocale, type Locale } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -11,20 +11,13 @@ import {
 import { Globe } from 'lucide-react';
 
 const languages = [
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'es' as Locale, name: 'Español', flag: '🇪🇸' },
+  { code: 'en' as Locale, name: 'English', flag: '🇺🇸' },
 ];
 
 export function LanguageSwitcher() {
   const locale = useLocale();
-
-  const changeLanguage = (newLocale: string) => {
-    // Set cookie for persistence
-    document.cookie = `NEXT_LOCALE=${newLocale};path=/;max-age=31536000`;
-    // For static export, use full page reload instead of router.refresh()
-    // router.refresh() makes RSC calls which don't work with static export
-    window.location.reload();
-  };
+  const setLocale = useChangeLocale();
 
   const currentLanguage = languages.find((lang) => lang.code === locale);
 
@@ -41,7 +34,7 @@ export function LanguageSwitcher() {
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
-            onClick={() => changeLanguage(lang.code)}
+            onClick={() => setLocale(lang.code)}
             className={locale === lang.code ? 'bg-accent' : ''}
           >
             <span className="mr-2">{lang.flag}</span>
@@ -52,5 +45,3 @@ export function LanguageSwitcher() {
     </DropdownMenu>
   );
 }
-
-

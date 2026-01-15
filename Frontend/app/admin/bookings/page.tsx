@@ -1,3 +1,5 @@
+'use client';
+
 "use client"
 
 import { AdminSidebar } from "@/components/admin/sidebar"
@@ -24,7 +26,7 @@ import { format } from "date-fns"
 import { Check, X, Loader2, Search, CalendarIcon, Filter, XCircle } from "lucide-react"
 import type { BookingStatus } from "@/lib/types"
 import { useState, useMemo } from "react"
-import { useTranslations } from 'next-intl'
+import { useTranslations } from '@/lib/i18n'
 
 const ITEMS_PER_PAGE = 10
 

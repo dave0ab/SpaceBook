@@ -1,3 +1,5 @@
+'use client';
+
 "use client"
 
 import { UserHeader } from "@/components/user/user-header"
@@ -9,7 +11,7 @@ import { useBookings } from "@/lib/hooks/use-bookings"
 import { Clock, CheckCircle, XCircle, Calendar, ArrowRight, Loader2 } from "lucide-react"
 import Link from "next/link"
 import { format } from "date-fns"
-import { useTranslations } from 'next-intl'
+import { useTranslations } from '@/lib/i18n'
 
 export default function UserDashboardPage() {
   const { user } = useAuth()

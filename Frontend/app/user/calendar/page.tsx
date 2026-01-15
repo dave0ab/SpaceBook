@@ -1,3 +1,5 @@
+'use client';
+
 "use client"
 
 import { useState, useEffect } from "react"
@@ -12,7 +14,7 @@ import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMont
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { BookingStatus } from "@/lib/types"
-import { useTranslations } from 'next-intl'
+import { useTranslations } from '@/lib/i18n'
 
 export default function UserCalendarPage() {
   const { user: currentUser } = useAuth()

@@ -1,3 +1,5 @@
+'use client';
+
 "use client"
 
 import { Suspense, useState } from "react"
@@ -18,7 +20,7 @@ import { format, parse } from "date-fns"
 import { Calendar as CalendarIcon, Clock, Users, Search, CheckCircle, Loader2 } from "lucide-react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-import { useTranslations } from 'next-intl'
+import { useTranslations } from '@/lib/i18n'
 
 // Time slots constant
 const timeSlots = [

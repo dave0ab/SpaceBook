@@ -1,3 +1,5 @@
+'use client';
+
 "use client"
 
 import type React from "react"
@@ -14,7 +16,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useAdminUsers } from "@/lib/hooks/use-admin"
 import { useCreateUser, useDeleteUser } from "@/lib/hooks/use-users"
 import { Plus, Trash2, User, Loader2 } from "lucide-react"
-import { useTranslations } from 'next-intl'
+import { useTranslations } from '@/lib/i18n'
 
 export default function AdminUsersPage() {
   const { data: users = [], isLoading } = useAdminUsers()

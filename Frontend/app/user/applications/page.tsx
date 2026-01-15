@@ -1,3 +1,5 @@
+'use client';
+
 "use client"
 
 import { useState } from "react"
@@ -12,7 +14,7 @@ import { Loader2 } from "lucide-react"
 import type { BookingStatus } from "@/lib/types"
 import { format } from "date-fns"
 import { Clock, CheckCircle, XCircle, Calendar, Building2 } from "lucide-react"
-import { useTranslations } from 'next-intl'
+import { useTranslations } from '@/lib/i18n'
 
 export default function UserApplicationsPage() {
   const { user: currentUser } = useAuth()

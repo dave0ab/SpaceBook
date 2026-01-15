@@ -1,3 +1,5 @@
+'use client';
+
 "use client"
 
 import { useState } from "react"
@@ -23,7 +25,7 @@ import {
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { BookingStatus } from "@/lib/types"
-import { useTranslations } from 'next-intl'
+import { useTranslations } from '@/lib/i18n'
 
 type ViewMode = "week" | "month"
 

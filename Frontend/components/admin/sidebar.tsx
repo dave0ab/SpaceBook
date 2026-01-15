@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { LayoutDashboard, Calendar, ClipboardList, Users, BarChart3, Building2, LogOut } from "lucide-react"
-import { useTranslations } from 'next-intl'
+import { useTranslations } from '@/lib/i18n'
 
 export function AdminSidebar() {
   const pathname = usePathname()

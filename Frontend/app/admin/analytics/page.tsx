@@ -1,3 +1,5 @@
+'use client';
+
 "use client"
 
 import { AdminSidebar } from "@/components/admin/sidebar"
@@ -7,7 +9,7 @@ import { useAdminBookings } from "@/lib/hooks/use-admin"
 import { useAdminUsers } from "@/lib/hooks/use-admin"
 import { useSpaces } from "@/lib/hooks/use-spaces"
 import { Loader2 } from "lucide-react"
-import { useTranslations } from 'next-intl'
+import { useTranslations } from '@/lib/i18n'
 
 export default function AdminAnalyticsPage() {
   const { data: bookings = [], isLoading: bookingsLoading } = useAdminBookings()

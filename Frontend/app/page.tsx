@@ -1,7 +1,9 @@
+'use client';
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Calendar, Users, Building2, ArrowRight } from "lucide-react"
-import { useTranslations } from 'next-intl'
+import { useTranslations } from '@/lib/i18n'
 import { LanguageSwitcher } from "@/components/language-switcher"
 
 export default function HomePage() {

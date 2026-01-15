@@ -16,7 +16,7 @@ import { useAuth } from "@/lib/providers/auth-provider"
 import { useNotifications, useUnreadNotificationCount } from "@/lib/hooks/use-notifications"
 import { NotificationTray } from "@/components/admin/notification-tray"
 import { cn } from "@/lib/utils"
-import { useTranslations } from 'next-intl'
+import { useTranslations } from '@/lib/i18n'
 import { LanguageSwitcher } from "@/components/language-switcher"
 
 export function UserHeader() {

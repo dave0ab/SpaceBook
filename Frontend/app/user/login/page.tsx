@@ -1,3 +1,5 @@
+'use client';
+
 "use client"
 
 import type React from "react"
@@ -11,7 +13,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Building2, Lock, Mail, User, ArrowLeft, Info } from "lucide-react"
 import { useAuth } from "@/lib/providers/auth-provider"
-import { useTranslations } from 'next-intl'
+import { useTranslations } from '@/lib/i18n'
 import { LanguageSwitcher } from "@/components/language-switcher"
 
 export default function UserLoginPage() {

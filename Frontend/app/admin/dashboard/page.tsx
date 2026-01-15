@@ -1,3 +1,5 @@
+'use client';
+
 "use client"
 
 import { AdminSidebar } from "@/components/admin/sidebar"
@@ -9,7 +11,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
-import { useTranslations } from 'next-intl'
+import { useTranslations } from '@/lib/i18n'
 
 export default function AdminDashboardPage() {
   const { data: bookings = [], isLoading: bookingsLoading } = useAdminBookings()

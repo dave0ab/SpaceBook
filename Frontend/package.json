@@ -1,14 +1,12 @@
 {
-  "name": "my-v0-project",
-  "version": "0.1.2",
+  "name": "spacebook-frontend",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "next build",
-    "build:dev": "node scripts/build-dev.js",
-    "build:prod": "node scripts/build-prod.js",
     "dev": "next dev -p 5055",
-    "lint": "eslint .",
-    "start": "next start -p 5055"
+    "build": "next build",
+    "start": "next start -p 5055",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
