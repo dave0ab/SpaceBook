@@ -94,6 +94,8 @@ export class BookingsService {
     }
 
     if (startDate && endDate) {
+      // For date-only fields, create Date objects from the date strings
+      // The date strings are in YYYY-MM-DD format
       where.date = {
         gte: new Date(startDate),
         lte: new Date(endDate),
@@ -104,29 +106,18 @@ export class BookingsService {
       where,
       select: {
         date: true,
-        status: true,
       },
     });
 
-    // Group by date and status
-    const counts: Record<string, Record<BookingStatus, number>> = {};
+    // Group by date and count total bookings per date
+    const counts: Record<string, number> = {};
 
     bookings.forEach((booking) => {
       const dateKey = booking.date.toISOString().split('T')[0];
-      if (!counts[dateKey]) {
-        counts[dateKey] = {
-          [BookingStatus.pending]: 0,
-          [BookingStatus.approved]: 0,
-          [BookingStatus.rejected]: 0,
-        };
-      }
-      counts[dateKey][booking.status]++;
+      counts[dateKey] = (counts[dateKey] || 0) + 1;
     });
 
-    return Object.entries(counts).map(([date, statusCounts]) => ({
-      date,
-      ...statusCounts,
-    }));
+    return counts;
   }
 
   async findOne(id: string) {
