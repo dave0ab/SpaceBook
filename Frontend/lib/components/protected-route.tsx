@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '../providers/auth-provider';
 import { getAccessToken } from '../api-client';
 
@@ -13,26 +13,45 @@ export function ProtectedRoute({
   requireAdmin?: boolean;
 }) {
   const { user, isLoading } = useAuth();
+  const router = useRouter();
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
   const token = getAccessToken();
+
+  // Wait for client-side mount to ensure pathname is available (important for static export)
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Don't protect login pages
   const isLoginPage = pathname === '/user/login' || pathname === '/admin/login';
 
   useEffect(() => {
-    // Skip protection on login pages
-    if (isLoginPage) return;
+    // Wait for mount and skip protection on login pages
+    if (!mounted || isLoginPage) return;
 
     if (!isLoading && (!token || !user)) {
-      window.location.href = '/user/login';
+      router.push('/user/login');
     } else if (!isLoading && requireAdmin && user?.role !== 'admin') {
-      window.location.href = '/user/dashboard';
+      router.push('/user/dashboard');
     }
-  }, [isLoading, token, user, requireAdmin, isLoginPage]);
+  }, [mounted, isLoading, token, user, router, requireAdmin, isLoginPage]);
 
   // Don't show loading screen on login pages
   if (isLoginPage) {
     return <>{children}</>;
+  }
+
+  // Wait for mount before checking auth (important for static export)
+  if (!mounted) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
+          <p className="mt-4 text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   // Show loading while checking auth

@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
 import { User } from '../types';
 import { getAccessToken, clearTokens } from '../api-client';
 import { authService } from '../services/auth.service';
@@ -19,6 +20,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     // Check if user is logged in on mount
@@ -54,11 +56,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const response = await authService.login({ email, password });
       setUser(response.user);
-      // Redirect based on user role - use window.location for static export compatibility
+      // Redirect based on user role
       if (response.user.role === 'admin') {
-        window.location.href = '/admin/dashboard';
+        router.push('/admin/dashboard');
       } else {
-        window.location.href = '/user/dashboard';
+        router.push('/user/dashboard');
       }
     } catch (error) {
       throw error;
@@ -69,7 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const response = await authService.register({ name, email, password, role });
       setUser(response.user);
-      window.location.href = '/user/dashboard';
+      router.push('/user/dashboard');
     } catch (error) {
       throw error;
     }
@@ -82,7 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.error('Logout error:', error);
     } finally {
       setUser(null);
-      window.location.href = '/user/login';
+      router.push('/user/login');
     }
   };
 
