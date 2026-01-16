@@ -30,9 +30,18 @@ export function ProtectedRoute({
     // Wait for mount and skip protection on login pages
     if (!mounted || isLoginPage) return;
 
-    if (!isLoading && (!token || !user)) {
+    // Wait for auth to finish loading before making redirect decisions
+    if (isLoading) return;
+
+    // If no token or user after loading is complete, redirect to login
+    if (!token || !user) {
       router.push('/user/login');
-    } else if (!isLoading && requireAdmin && user?.role !== 'admin') {
+      return;
+    }
+
+    // Only redirect if we're certain the user is not an admin (user exists but role is not admin)
+    // Don't redirect if user is null or still loading
+    if (requireAdmin && user && user.role !== 'admin') {
       router.push('/user/dashboard');
     }
   }, [mounted, isLoading, token, user, router, requireAdmin, isLoginPage]);
@@ -78,9 +87,16 @@ export function ProtectedRoute({
     );
   }
 
-  // Check admin requirement
-  if (requireAdmin && user.role !== 'admin') {
-    return null;
+  // Check admin requirement - only block if user exists and is definitely not an admin
+  if (requireAdmin && user && user.role !== 'admin') {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
+          <p className="mt-4 text-muted-foreground">Redirecting...</p>
+        </div>
+      </div>
+    );
   }
 
   return <>{children}</>;
