@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useAuth } from '../providers/auth-provider';
 import { getAccessToken } from '../api-client';
 
@@ -13,7 +13,6 @@ export function ProtectedRoute({
   requireAdmin?: boolean;
 }) {
   const { user, isLoading } = useAuth();
-  const router = useRouter();
   const pathname = usePathname();
   const token = getAccessToken();
 
@@ -25,11 +24,11 @@ export function ProtectedRoute({
     if (isLoginPage) return;
 
     if (!isLoading && (!token || !user)) {
-      router.push('/user/login');
+      window.location.href = '/user/login';
     } else if (!isLoading && requireAdmin && user?.role !== 'admin') {
-      router.push('/user/dashboard');
+      window.location.href = '/user/dashboard';
     }
-  }, [isLoading, token, user, router, requireAdmin, isLoginPage]);
+  }, [isLoading, token, user, requireAdmin, isLoginPage]);
 
   // Don't show loading screen on login pages
   if (isLoginPage) {
