@@ -16,6 +16,7 @@ export function ProtectedRoute({
   const router = useRouter();
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
+  const [hasCheckedAuth, setHasCheckedAuth] = useState(false);
   const token = getAccessToken();
 
   // Wait for client-side mount to ensure pathname is available (important for static export)
@@ -33,18 +34,32 @@ export function ProtectedRoute({
     // Wait for auth to finish loading before making redirect decisions
     if (isLoading) return;
 
+    // Prevent multiple redirect attempts
+    if (hasCheckedAuth) return;
+
     // If no token or user after loading is complete, redirect to login
     if (!token || !user) {
+      setHasCheckedAuth(true);
       router.push('/user/login');
       return;
     }
 
-    // Only redirect if we're certain the user is not an admin (user exists but role is not admin)
-    // Don't redirect if user is null or still loading
-    if (requireAdmin && user && user.role !== 'admin') {
+    // Only redirect if we're certain the user is not an admin
+    // Check that user.role exists and is explicitly not 'admin'
+    if (requireAdmin && user && user.role && user.role !== 'admin') {
+      setHasCheckedAuth(true);
       router.push('/user/dashboard');
+      return;
     }
-  }, [mounted, isLoading, token, user, router, requireAdmin, isLoginPage]);
+
+    // If we get here and requireAdmin is true, user must be admin - allow access
+    // Mark as checked to prevent re-checking
+    if (requireAdmin && user && user.role === 'admin') {
+      setHasCheckedAuth(true);
+    } else if (!requireAdmin) {
+      setHasCheckedAuth(true);
+    }
+  }, [mounted, isLoading, token, user, router, requireAdmin, isLoginPage, hasCheckedAuth]);
 
   // Don't show loading screen on login pages
   if (isLoginPage) {
@@ -88,12 +103,26 @@ export function ProtectedRoute({
   }
 
   // Check admin requirement - only block if user exists and is definitely not an admin
-  if (requireAdmin && user && user.role !== 'admin') {
+  // Add explicit check for user.role existence
+  if (requireAdmin && user && user.role && user.role !== 'admin') {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
           <p className="mt-4 text-muted-foreground">Redirecting...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // If requireAdmin is true but user.role is undefined or not set, wait a bit more
+  // This handles the case where JWT decoding might be delayed or role is missing
+  if (requireAdmin && user && !user.role) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
+          <p className="mt-4 text-muted-foreground">Loading user data...</p>
         </div>
       </div>
     );
