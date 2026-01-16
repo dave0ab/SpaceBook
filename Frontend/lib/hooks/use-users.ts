@@ -1,6 +1,6 @@
+import { toast } from 'sonner';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { usersService, type User, type CreateUserDto, type UpdateUserDto } from '../services/users.service';
-import { toast } from 'sonner';
 
 export function useUsers() {
   return useQuery<User[]>({
