@@ -1,25 +1,24 @@
 "use client";
 
-import type React from "react";
-
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import type React from "react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Building2, Lock, Mail, ArrowLeft, Loader2 } from "lucide-react";
 import { useAuth } from "@/lib/providers/auth-provider";
-import { useTranslations } from "@/lib/i18n";
 import { LanguageSwitcher } from "@/components/language-switcher";
-import { motion } from "framer-motion";
+import { Building2, Lock, Mail, ArrowLeft, Loader2 } from "lucide-react";
 
 export default function UserLoginPage() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+
   const { login } = useAuth();
   const t = useTranslations();
 
@@ -118,7 +117,10 @@ export default function UserLoginPage() {
 
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="login-email" className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                <Label
+                  htmlFor="login-email"
+                  className="text-xs uppercase tracking-wider text-muted-foreground font-semibold"
+                >
                   {t("common.email")}
                 </Label>
                 <div className="relative group">
@@ -137,7 +139,10 @@ export default function UserLoginPage() {
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="login-password" className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                  <Label
+                    htmlFor="login-password"
+                    className="text-xs uppercase tracking-wider text-muted-foreground font-semibold"
+                  >
                     {t("common.password")}
                   </Label>
                   <Link
@@ -191,7 +196,10 @@ export default function UserLoginPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <Button variant="outline" className="h-11 rounded-xl gap-2 hover:bg-secondary/50 transition-colors">
+              <Button
+                variant="outline"
+                className="h-11 rounded-xl gap-2 hover:bg-secondary/50 transition-colors"
+              >
                 <svg className="h-5 w-5" aria-hidden="true" viewBox="0 0 24 24">
                   <path
                     d="M12.0003 20.45c4.6667 0 8.45-3.7833 8.45-8.45 0-4.6667-3.7833-8.45-8.45-8.45-4.6667 0-8.45 3.7833-8.45 8.45 0 4.6667 3.7833 8.45 8.45 8.45Z"
@@ -218,7 +226,10 @@ export default function UserLoginPage() {
                 </svg>
                 Google
               </Button>
-              <Button variant="outline" className="h-11 rounded-xl gap-2 hover:bg-secondary/50 transition-colors">
+              <Button
+                variant="outline"
+                className="h-11 rounded-xl gap-2 hover:bg-secondary/50 transition-colors"
+              >
                 <Building2 className="w-5 h-5 text-foreground" />
                 SSO
               </Button>
@@ -226,7 +237,14 @@ export default function UserLoginPage() {
           </div>
 
           <div className="pt-6 text-center text-sm text-muted-foreground">
-            {t("auth.demo")}: <span className="font-mono text-xs bg-secondary px-1.5 py-0.5 rounded text-foreground">john.smith@example.com</span> / <span className="font-mono text-xs bg-secondary px-1.5 py-0.5 rounded text-foreground">password123</span>
+            {t("auth.demo")}:{" "}
+            <span className="font-mono text-xs bg-secondary px-1.5 py-0.5 rounded text-foreground">
+              john.smith@example.com
+            </span>{" "}
+            /{" "}
+            <span className="font-mono text-xs bg-secondary px-1.5 py-0.5 rounded text-foreground">
+              password123
+            </span>
           </div>
         </motion.div>
       </div>

@@ -1,5 +1,9 @@
+import { API_CONFIG } from '@/lib/api.config';
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { API_CONFIG } from './api.config';
+
+
+console.log('API_CONFIG.BASE_URL:', API_CONFIG.BASE_URL);
+
 
 // Token storage keys
 const ACCESS_TOKEN_KEY = 'spacebook_access_token';
