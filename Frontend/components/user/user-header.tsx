@@ -1,43 +1,46 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Building2, Bell, User, ChevronDown, Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Building2, Bell, User, ChevronDown, Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { useAuth } from "@/lib/providers/auth-provider"
-import { useNotifications, useUnreadNotificationCount } from "@/lib/hooks/use-notifications"
-import { NotificationTray } from "@/components/admin/notification-tray"
-import { cn } from "@/lib/utils"
-import { useTranslations } from '@/lib/i18n'
-import { LanguageSwitcher } from "@/components/language-switcher"
+} from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/lib/providers/auth-provider";
+import {
+  useNotifications,
+  useUnreadNotificationCount,
+} from "@/lib/hooks/use-notifications";
+import { NotificationTray } from "@/components/admin/notification-tray";
+import { cn } from "@/lib/utils";
+import { useTranslations } from "@/lib/i18n";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 export function UserHeader() {
-  const pathname = usePathname()
-  const { user, logout } = useAuth()
-  const { data: notifications = [] } = useNotifications()
-  const { data: unreadCount = 0 } = useUnreadNotificationCount()
-  const [showNotifications, setShowNotifications] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const t = useTranslations()
+  const pathname = usePathname();
+  const { user, logout } = useAuth();
+  const { data: notifications = [] } = useNotifications();
+  const { data: unreadCount = 0 } = useUnreadNotificationCount();
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const t = useTranslations();
 
   const navItems = [
-    { href: "/user/dashboard", label: t('sidebar.dashboard') },
-    { href: "/user/book", label: t('sidebar.book') },
-    { href: "/user/calendar", label: t('calendar.calendar') },
-    { href: "/user/applications", label: t('sidebar.myApplications') },
-  ]
+    { href: "/user/dashboard", label: t("sidebar.dashboard") },
+    { href: "/user/book", label: t("sidebar.book") },
+    { href: "/user/calendar", label: t("calendar.calendar") },
+    { href: "/user/applications", label: t("sidebar.myApplications") },
+  ];
 
   const handleLogout = async () => {
-    await logout()
-  }
+    await logout();
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-card border-b border-border">
@@ -46,7 +49,7 @@ export function UserHeader() {
           {/* Logo */}
           <Link href="/user/dashboard" className="flex items-center gap-2">
             <Building2 className="h-7 w-7 text-primary" />
-            <span className="text-xl font-bold">{t('common.appName')}</span>
+            <span className="text-xl font-bold">{t("common.appName")}</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -59,7 +62,7 @@ export function UserHeader() {
                   "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
                   pathname === item.href
                     ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted",
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
                 )}
               >
                 {item.label}
@@ -88,7 +91,10 @@ export function UserHeader() {
                 )}
               </Button>
               {showNotifications && (
-                <NotificationTray notifications={notifications} onClose={() => setShowNotifications(false)} />
+                <NotificationTray
+                  notifications={notifications}
+                  onClose={() => setShowNotifications(false)}
+                />
               )}
             </div>
 
@@ -104,10 +110,10 @@ export function UserHeader() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem>{t('topbar.profile')}</DropdownMenuItem>
+                <DropdownMenuItem>{t("topbar.profile")}</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>
-                  {t('topbar.logout')}
+                  {t("topbar.logout")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -119,7 +125,11 @@ export function UserHeader() {
               className="md:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </Button>
           </div>
         </div>
@@ -136,7 +146,7 @@ export function UserHeader() {
                   "block px-4 py-3 rounded-lg text-sm font-medium transition-colors",
                   pathname === item.href
                     ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted",
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
                 )}
               >
                 {item.label}
@@ -146,5 +156,5 @@ export function UserHeader() {
         )}
       </div>
     </header>
-  )
+  );
 }

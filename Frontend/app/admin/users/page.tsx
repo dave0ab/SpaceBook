@@ -1,22 +1,19 @@
 'use client';
 
-"use client"
-
 import type React from "react"
-
 import { useState } from "react"
-import { AdminSidebar } from "@/components/admin/sidebar"
-import { AdminTopbar } from "@/components/admin/topbar"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { useTranslations } from '@/lib/i18n'
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
 import { useAdminUsers } from "@/lib/hooks/use-admin"
-import { useCreateUser, useDeleteUser } from "@/lib/hooks/use-users"
+import { AdminTopbar } from "@/components/admin/topbar"
+import { AdminSidebar } from "@/components/admin/sidebar"
 import { Plus, Trash2, User, Loader2 } from "lucide-react"
-import { useTranslations } from '@/lib/i18n'
+import { useCreateUser, useDeleteUser } from "@/lib/hooks/use-users"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 
 export default function AdminUsersPage() {
   const { data: users = [], isLoading } = useAdminUsers()
@@ -34,7 +31,7 @@ export default function AdminUsersPage() {
       await createUser.mutateAsync({
         name: newUser.name,
         email: newUser.email,
-        password: newUser.password || "password123", // Default password, should be changed by user
+        password: newUser.password || "password123",
         role: "user",
       })
       setNewUser({ name: "", email: "", password: "" })

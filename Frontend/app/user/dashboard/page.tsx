@@ -1,50 +1,57 @@
-'use client';
+"use client";
 
-"use client"
+"use client";
 
-import { UserHeader } from "@/components/user/user-header"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { useAuth } from "@/lib/providers/auth-provider"
-import { useBookings } from "@/lib/hooks/use-bookings"
-import { Clock, CheckCircle, XCircle, Calendar, ArrowRight, Loader2 } from "lucide-react"
-import Link from "next/link"
-import { format } from "date-fns"
-import { useTranslations } from '@/lib/i18n'
+import { UserHeader } from "@/components/user/user-header";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/lib/providers/auth-provider";
+import { useBookings } from "@/lib/hooks/use-bookings";
+import {
+  Clock,
+  CheckCircle,
+  XCircle,
+  Calendar,
+  ArrowRight,
+  Loader2,
+} from "lucide-react";
+import Link from "next/link";
+import { format } from "date-fns";
+import { useTranslations } from "@/lib/i18n";
 
 export default function UserDashboardPage() {
-  const { user } = useAuth()
-  const { data: bookings = [], isLoading } = useBookings(undefined, user?.id)
-  const t = useTranslations()
+  const { user } = useAuth();
+  const { data: bookings = [], isLoading } = useBookings(undefined, user?.id);
+  const t = useTranslations();
 
-  const pendingBookings = bookings.filter((b) => b.status === "pending")
-  const approvedBookings = bookings.filter((b) => b.status === "approved")
-  const rejectedBookings = bookings.filter((b) => b.status === "rejected")
+  const pendingBookings = bookings.filter((b) => b.status === "pending");
+  const approvedBookings = bookings.filter((b) => b.status === "approved");
+  const rejectedBookings = bookings.filter((b) => b.status === "rejected");
 
   const stats = [
     {
-      label: t('booking.pending'),
+      label: t("booking.pending"),
       value: pendingBookings.length,
       icon: Clock,
       color: "text-status-pending",
       bgColor: "bg-status-pending/20",
     },
     {
-      label: t('booking.approved'),
+      label: t("booking.approved"),
       value: approvedBookings.length,
       icon: CheckCircle,
       color: "text-status-approved",
       bgColor: "bg-status-approved/20",
     },
     {
-      label: t('booking.rejected'),
+      label: t("booking.rejected"),
       value: rejectedBookings.length,
       icon: XCircle,
       color: "text-status-rejected",
       bgColor: "bg-status-rejected/20",
     },
-  ]
+  ];
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -52,25 +59,25 @@ export default function UserDashboardPage() {
         return (
           <Badge className="bg-status-pending/20 text-status-pending border-0 gap-1">
             <Clock className="h-3 w-3" />
-            {t('booking.pending')}
+            {t("booking.pending")}
           </Badge>
-        )
+        );
       case "approved":
         return (
           <Badge className="bg-status-approved/20 text-status-approved border-0 gap-1">
             <CheckCircle className="h-3 w-3" />
-            {t('booking.approved')}
+            {t("booking.approved")}
           </Badge>
-        )
+        );
       case "rejected":
         return (
           <Badge className="bg-status-rejected/20 text-status-rejected border-0 gap-1">
             <XCircle className="h-3 w-3" />
-            {t('booking.rejected')}
+            {t("booking.rejected")}
           </Badge>
-        )
+        );
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -78,8 +85,12 @@ export default function UserDashboardPage() {
       <main className="container mx-auto px-4 py-8">
         {/* Welcome */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">{t('dashboard.welcomeBack')}, {user?.name || "User"}!</h1>
-          <p className="text-muted-foreground">{t('dashboard.hereIsOverview')}</p>
+          <h1 className="text-3xl font-bold mb-2">
+            {t("dashboard.welcomeBack")}, {user?.name || "User"}!
+          </h1>
+          <p className="text-muted-foreground">
+            {t("dashboard.hereIsOverview")}
+          </p>
         </div>
 
         {/* Stats */}
@@ -92,7 +103,9 @@ export default function UserDashboardPage() {
                     <stat.icon className={`h-6 w-6 ${stat.color}`} />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">{stat.label}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {stat.label}
+                    </p>
                     <p className="text-3xl font-bold">{stat.value}</p>
                   </div>
                 </div>
@@ -106,7 +119,7 @@ export default function UserDashboardPage() {
           <Link href="/user/book">
             <Button size="lg" className="gap-2">
               <Calendar className="h-5 w-5" />
-              {t('booking.bookSpace')}
+              {t("booking.bookSpace")}
               <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
@@ -115,10 +128,10 @@ export default function UserDashboardPage() {
         {/* Recent Bookings */}
         <Card className="bg-card border-border">
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>{t('booking.recentBookings')}</CardTitle>
+            <CardTitle>{t("booking.recentBookings")}</CardTitle>
             <Link href="/user/applications">
               <Button variant="outline" size="sm">
-                {t('booking.viewAll')}
+                {t("booking.viewAll")}
               </Button>
             </Link>
           </CardHeader>
@@ -130,10 +143,12 @@ export default function UserDashboardPage() {
             ) : bookings.length === 0 ? (
               <div className="text-center py-12">
                 <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="font-medium mb-2">{t('booking.noBookings')}</h3>
-                <p className="text-muted-foreground mb-4">{t('applications.startBooking')}</p>
+                <h3 className="font-medium mb-2">{t("booking.noBookings")}</h3>
+                <p className="text-muted-foreground mb-4">
+                  {t("applications.startBooking")}
+                </p>
                 <Link href="/user/book">
-                  <Button>{t('booking.bookSpace')}</Button>
+                  <Button>{t("booking.bookSpace")}</Button>
                 </Link>
               </div>
             ) : (
@@ -148,10 +163,19 @@ export default function UserDashboardPage() {
                         <Calendar className="h-6 w-6 text-primary" />
                       </div>
                       <div>
-                        <p className="font-medium">{booking.space?.name || 'Unknown Space'}</p>
+                        <p className="font-medium">
+                          {booking.space?.name || "Unknown Space"}
+                        </p>
                         <p className="text-sm text-muted-foreground">
-                          {format(new Date(typeof booking.date === 'string' ? booking.date : booking.date), "EEEE, MMMM d, yyyy")} • {booking.startTime} -{" "}
-                          {booking.endTime}
+                          {format(
+                            new Date(
+                              typeof booking.date === "string"
+                                ? booking.date
+                                : booking.date
+                            ),
+                            "EEEE, MMMM d, yyyy"
+                          )}{" "}
+                          • {booking.startTime} - {booking.endTime}
                         </p>
                       </div>
                     </div>
@@ -164,5 +188,5 @@ export default function UserDashboardPage() {
         </Card>
       </main>
     </div>
-  )
+  );
 }

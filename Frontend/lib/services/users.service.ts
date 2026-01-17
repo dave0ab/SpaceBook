@@ -18,6 +18,7 @@ export interface User {
 export interface CreateUserDto {
   name: string;
   email: string;
+  password?: string;
   role?: 'user' | 'admin';
   status?: 'active' | 'inactive';
   avatar?: string;

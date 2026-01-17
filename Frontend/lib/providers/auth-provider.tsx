@@ -1,16 +1,27 @@
-'use client';
+"use client";
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
-import { User } from '../types';
-import { getAccessToken, clearTokens } from '../api-client';
-import { authService } from '../services/auth.service';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from "react";
+import { useRouter } from "next/navigation";
+import { User } from "../types";
+import { getAccessToken, clearTokens } from "../api-client";
+import { authService } from "../services/auth.service";
 
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string, role?: 'user' | 'admin') => Promise<void>;
+  register: (
+    name: string,
+    email: string,
+    password: string,
+    role?: "user" | "admin"
+  ) => Promise<void>;
   logout: () => Promise<void>;
   setUser: (user: User | null) => void;
 }
@@ -39,7 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setUser(userInfo);
           } catch (error) {
             // Token might be invalid or expired, clear it
-            console.error('Failed to load user:', error);
+            console.error("Failed to load user:", error);
             clearTokens();
             setUser(null);
           }
@@ -47,13 +58,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser(null);
         }
       } catch (error) {
-        console.error('Error in loadUser:', error);
+        console.error("Error in loadUser:", error);
         setUser(null);
       } finally {
         setIsLoading(false);
       }
     };
-    
+
     loadUser();
   }, []);
 
@@ -62,21 +73,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const response = await authService.login({ email, password });
       setUser(response.user);
       // Redirect based on user role
-      if (response.user.role === 'admin') {
-        router.push('/admin/dashboard');
+      if (response.user.role === "admin") {
+        router.push("/admin/dashboard");
       } else {
-        router.push('/user/dashboard');
+        router.push("/user/dashboard");
       }
     } catch (error) {
       throw error;
     }
   };
 
-  const register = async (name: string, email: string, password: string, role?: 'user' | 'admin') => {
+  const register = async (
+    name: string,
+    email: string,
+    password: string,
+    role?: "user" | "admin"
+  ) => {
     try {
-      const response = await authService.register({ name, email, password, role });
+      const response = await authService.register({
+        name,
+        email,
+        password,
+        role,
+      });
       setUser(response.user);
-      router.push('/user/dashboard');
+      router.push("/user/dashboard");
     } catch (error) {
       throw error;
     }
@@ -86,15 +107,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await authService.logout();
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
     } finally {
       setUser(null);
-      router.push('/user/login');
+      router.push("/user/login");
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, register, logout, setUser }}>
+    <AuthContext.Provider
+      value={{ user, isLoading, login, register, logout, setUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -103,8 +126,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }
-
