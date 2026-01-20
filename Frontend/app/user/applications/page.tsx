@@ -178,7 +178,7 @@ export default function UserApplicationsPage() {
                                 </div>
                                 <div className="flex items-center gap-1">
                                   <Clock className="h-3 w-3 md:h-4 md:w-4 flex-shrink-0" />
-                                  <span>Requested: {formatCreatedAt((booking as any).createdAt)}</span>
+                                  <span>{t('booking.requestCreatedAt')}: {formatCreatedAt((booking as any).createdAt)}</span>
                                 </div>
                               </div>
                               {booking.notes && (

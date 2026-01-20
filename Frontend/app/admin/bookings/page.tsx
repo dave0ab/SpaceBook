@@ -352,7 +352,7 @@ export default function AdminBookingsPage() {
                               <p className="text-sm">{format(new Date(booking.date), "MMM d, yyyy")}</p>
                             </div>
                             <div className="flex items-center gap-2">
-                              <p className="text-xs text-muted-foreground">Created:</p>
+                              <p className="text-xs text-muted-foreground">{t('booking.createdAt')}:</p>
                               <p className="text-sm">{formatCreatedAt((booking as any).createdAt)}</p>
                             </div>
                             <div className="flex items-center gap-2">
@@ -398,7 +398,7 @@ export default function AdminBookingsPage() {
                           <th className="text-left py-3 px-3 md:px-4 font-medium text-muted-foreground text-xs md:text-sm">{t('booking.user')}</th>
                           <th className="text-left py-3 px-3 md:px-4 font-medium text-muted-foreground text-xs md:text-sm">{t('booking.space')}</th>
                           <th className="text-left py-3 px-3 md:px-4 font-medium text-muted-foreground text-xs md:text-sm">{t('booking.date')}</th>
-                          <th className="text-left py-3 px-3 md:px-4 font-medium text-muted-foreground text-xs md:text-sm">Created</th>
+                          <th className="text-left py-3 px-3 md:px-4 font-medium text-muted-foreground text-xs md:text-sm">{t('booking.createdAt')}</th>
                           <th className="text-left py-3 px-3 md:px-4 font-medium text-muted-foreground text-xs md:text-sm">{t('booking.time')}</th>
                           <th className="text-left py-3 px-3 md:px-4 font-medium text-muted-foreground text-xs md:text-sm">{t('booking.status')}</th>
                           <th className="text-left py-3 px-3 md:px-4 font-medium text-muted-foreground text-xs md:text-sm">{t('booking.actions')}</th>

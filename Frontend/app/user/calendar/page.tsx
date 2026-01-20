@@ -334,7 +334,7 @@ export default function UserCalendarPage() {
                                   </div>
                                 </Badge>
                                 <div className="text-xs text-muted-foreground whitespace-nowrap">
-                                  Requested: {formatCreatedAt((booking as any).createdAt)}
+                                  {t('booking.requestCreatedAt')}: {formatCreatedAt((booking as any).createdAt)}
                                 </div>
                               </div>
                             </div>
