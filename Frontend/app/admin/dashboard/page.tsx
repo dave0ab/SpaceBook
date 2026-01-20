@@ -3,8 +3,6 @@
 "use client"
 
 import { useState, useMemo } from 'react';
-import { AdminSidebar } from "@/components/admin/sidebar"
-import { AdminTopbar } from "@/components/admin/topbar"
 import { Card, CardContent } from "@/components/ui/card"
 import { useAdminBookings, useAdminUsers, useBookingsByUserDetailed, useBookingsBySpaceDetailed, useApprovedReservationsByDate, useRejectedReservationsByDate, useRejectedReservationsByUser } from "@/lib/hooks/use-admin"
 import { ClipboardList, CheckCircle, Clock, Loader2, XCircle } from "lucide-react"
@@ -188,24 +186,14 @@ export default function AdminDashboardPage() {
 
   if (isLoading && !startDate) {
     return (
-      <div className="flex min-h-screen bg-background">
-        <AdminSidebar />
-        <div className="flex-1 flex flex-col w-full md:w-auto">
-          <AdminTopbar />
-          <main className="flex-1 p-4 md:p-6 flex items-center justify-center">
-            <Loader2 className="h-12 w-12 animate-spin text-primary" />
-          </main>
-        </div>
+      <div className="flex items-center justify-center p-4 md:p-6 min-h-[400px]">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
       </div>
     )
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <AdminSidebar />
-      <div className="flex-1 flex flex-col w-full md:w-auto">
-        <AdminTopbar />
-        <main className="flex-1 p-4 md:p-6">
+    <div className="p-4 md:p-6">
           {/* Time Period Selector */}
           <Card className="bg-card border-border mb-6 md:mb-8">
             <CardContent className="p-4 md:p-6">
@@ -313,8 +301,6 @@ export default function AdminDashboardPage() {
               </div>
             </CardContent>
           </Card>
-        </main>
-      </div>
     </div>
   )
 }
