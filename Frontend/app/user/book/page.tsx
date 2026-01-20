@@ -1,10 +1,16 @@
-import { Suspense } from "react"
-import { BookingContent } from "@/components/user/BookingContent"
+import { fetchSpaces } from "@/lib/server-api";
+import { getTranslations } from "@/lib/i18n-server";
+import { BookingContent } from "@/components/user/BookingContent";
 
-export default function UserBookPage() {
+export const dynamic = "force-dynamic";
+
+export default async function UserBookPage() {
+  const [spaces, t] = await Promise.all([
+    fetchSpaces(),
+    getTranslations(),
+  ]);
+
   return (
-    <Suspense fallback={null}>
-      <BookingContent />
-    </Suspense>
-  )
+    <BookingContent initialSpaces={spaces || []} />
+  );
 }

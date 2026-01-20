@@ -6,16 +6,25 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useAuth } from "@/lib/providers/auth-provider"
 import { useBookings, useBookingCounts } from "@/lib/hooks/use-bookings"
-import { Loader2, CheckCircle, Clock, XCircle, Calendar, Building2, User } from "lucide-react"
+import { Loader2, CheckCircle, Clock, XCircle, Calendar, Building2, User as UserIcon } from "lucide-react"
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths } from "date-fns"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { BookingStatus } from "@/lib/types"
 import { useTranslations } from '@/lib/i18n'
 import { motion, AnimatePresence } from "framer-motion";
+import { User, Booking } from "@/lib/types";
 
-export function CalendarContent() {
-  const { user: currentUser } = useAuth()
+interface CalendarContentProps {
+  initialUser: User | null;
+  initialCounts: Record<string, number>;
+  initialBookings: Booking[];
+}
+
+export function CalendarContent({ initialUser, initialCounts, initialBookings }: CalendarContentProps) {
+  const { user: authUser } = useAuth()
+  const user = authUser || initialUser;
+  
   const [currentDate, setCurrentDate] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
   const t = useTranslations()
@@ -27,22 +36,27 @@ export function CalendarContent() {
   // Fetch counts for visible month
   const startDateForCounts = format(monthStart, "yyyy-MM-dd")
   const endDateForCounts = format(monthEnd, "yyyy-MM-dd")
-  const { data: countsByDate = {}, isLoading: countsLoading } = useBookingCounts(
+  const { data: countsByDate = initialCounts, isLoading: countsLoading } = useBookingCounts(
     startDateForCounts, 
     endDateForCounts, 
-    currentUser?.id
+    user?.id
   )
   
   // Fetch bookings ONLY for selected date (current date on load)
   const selectedDateStr = selectedDate ? format(selectedDate, "yyyy-MM-dd") : undefined
   const { data: selectedDateBookingsData = [], isLoading: bookingsLoading } = useBookings(
     undefined, 
-    currentUser?.id, 
+    user?.id, 
     selectedDateStr
   )
   
+  const isInitialDate = selectedDate && isSameDay(selectedDate, new Date());
+  const bookingsToDisplay = (isInitialDate && selectedDateBookingsData.length === 0) 
+    ? initialBookings 
+    : selectedDateBookingsData;
+
   // Filter selected date bookings
-  const selectedDateBookings = selectedDateBookingsData.filter(
+  const selectedDateBookings = bookingsToDisplay.filter(
     (b) => b.status === "approved" || b.status === "pending"
   )
 

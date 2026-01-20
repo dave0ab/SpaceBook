@@ -59,7 +59,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-4">
           <Link
-            href="/user/login"
+            href="/auth/user"
             className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
               scrolled
                 ? "bg-primary text-white hover:bg-primary/90"
@@ -69,7 +69,7 @@ export function Navbar() {
             Sign In
           </Link>
           <Link
-            href="/admin/login"
+            href="/auth/admin"
             className={`hidden sm:block px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
               scrolled
                 ? "border border-border text-foreground hover:bg-secondary"

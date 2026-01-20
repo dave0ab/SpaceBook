@@ -26,8 +26,13 @@ const timeSlots = [
 ];
 
 import { motion } from "framer-motion";
+import { Space } from "@/lib/types";
 
-export function BookingContent() {
+interface BookingContentProps {
+  initialSpaces: Space[];
+}
+
+export function BookingContent({ initialSpaces }: BookingContentProps) {
   const { user } = useAuth();
   const t = useTranslations();
   
@@ -42,14 +47,20 @@ export function BookingContent() {
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   
   // Hooks
-  const { data: spaces = [], isLoading: spacesLoading } = useSpaces(selectedSpaceType === "all" ? undefined : selectedSpaceType);
+  const { data: spaces = [], isLoading: spacesLoading } = useSpaces(
+    selectedSpaceType === "all" ? undefined : selectedSpaceType
+  );
+  
+  // Use initialSpaces for first render if no filters applied and loading
+  const displaySpaces = (selectedSpaceType === "all" && spaces.length === 0) ? initialSpaces : spaces;
+  
   const { data: bookings = [] } = useBookings();
   const createBooking = useCreateBooking();
 
   // Filter spaces based on search criteria
   const filteredSpaces = selectedSpaceType === "all" 
-    ? spaces 
-    : spaces.filter((space) => space.type === selectedSpaceType);
+    ? displaySpaces 
+    : displaySpaces.filter((space) => space.type === selectedSpaceType);
 
   // Check availability logic remains same...
   const getSpaceAvailability = (spaceId: string) => {
@@ -101,7 +112,7 @@ export function BookingContent() {
     }
   };
 
-  const selectedSpaceData = selectedSpace ? spaces.find((s) => s.id === selectedSpace) : null;
+  const selectedSpaceData = selectedSpace ? displaySpaces.find((s) => s.id === selectedSpace) : null;
 
   return (
     <main className="max-w-7xl mx-auto px-6 py-24 sm:py-32">

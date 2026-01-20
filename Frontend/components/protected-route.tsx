@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { useAuth } from '../providers/auth-provider';
-import { getAccessToken, clearTokens } from '../api-client';
+import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { useAuth } from "../lib/providers/auth-provider";
+import { getAccessToken, clearTokens } from "../lib/api-client";
 
-export function ProtectedRoute({ 
-  children, 
-  requireAdmin = false 
-}: { 
+export function ProtectedRoute({
+  children,
+  requireAdmin = false,
+}: {
   children: React.ReactNode;
   requireAdmin?: boolean;
 }) {
@@ -23,10 +23,10 @@ export function ProtectedRoute({
   const getTokenRole = (): string | null => {
     try {
       if (!token) return null;
-      
-      const parts = token.split('.');
+
+      const parts = token.split(".");
       if (parts.length !== 3) return null;
-      
+
       const payload = JSON.parse(atob(parts[1]));
       return payload.role || null;
     } catch {
@@ -40,7 +40,7 @@ export function ProtectedRoute({
   }, []);
 
   // Don't protect login pages
-  const isLoginPage = pathname === '/user/login' || pathname === '/admin/login';
+  const isLoginPage = pathname === "/auth/user" || pathname === "/auth/admin";
 
   useEffect(() => {
     // Wait for mount and skip protection on login pages
@@ -54,21 +54,21 @@ export function ProtectedRoute({
 
     // Validate token role matches required route
     const tokenRole = getTokenRole();
-    
+
     if (requireAdmin) {
       // If admin route, token must have admin role
-      if (tokenRole !== 'admin') {
+      if (tokenRole !== "admin") {
         setHasCheckedAuth(true);
         clearTokens(); // Clear invalid token
-        router.push('/admin/login');
+        router.push("/auth/admin");
         return;
       }
     } else {
       // If user route, reject admin tokens (admin should use admin routes)
-      if (tokenRole === 'admin') {
+      if (tokenRole === "admin") {
         setHasCheckedAuth(true);
         clearTokens(); // Clear admin token
-        router.push('/admin/login');
+        router.push("/auth/admin");
         return;
       }
     }
@@ -76,33 +76,42 @@ export function ProtectedRoute({
     // If no token or user after loading is complete, redirect to login
     if (!token || !user) {
       setHasCheckedAuth(true);
-      router.push(requireAdmin ? '/admin/login' : '/user/login');
+      router.push(requireAdmin ? "/auth/admin" : "/auth/user");
       return;
     }
 
     // Only redirect if we're certain the user is not an admin
     // Check that user.role exists and is explicitly not 'admin'
-    if (requireAdmin && user && user.role && user.role !== 'admin') {
+    if (requireAdmin && user && user.role && user.role !== "admin") {
       setHasCheckedAuth(true);
-      router.push('/user/dashboard');
+      router.push("/user/dashboard");
       return;
     }
-    
+
     // If user route but user is admin, redirect to admin dashboard
-    if (!requireAdmin && user && user.role === 'admin') {
+    if (!requireAdmin && user && user.role === "admin") {
       setHasCheckedAuth(true);
-      router.push('/admin/dashboard');
+      router.push("/admin/dashboard");
       return;
     }
 
     // If we get here and requireAdmin is true, user must be admin - allow access
     // Mark as checked to prevent re-checking
-    if (requireAdmin && user && user.role === 'admin') {
+    if (requireAdmin && user && user.role === "admin") {
       setHasCheckedAuth(true);
     } else if (!requireAdmin) {
       setHasCheckedAuth(true);
     }
-  }, [mounted, isLoading, token, user, router, requireAdmin, isLoginPage, hasCheckedAuth]);
+  }, [
+    mounted,
+    isLoading,
+    token,
+    user,
+    router,
+    requireAdmin,
+    isLoginPage,
+    hasCheckedAuth,
+  ]);
 
   // Don't show loading screen on login pages
   if (isLoginPage) {
@@ -147,7 +156,7 @@ export function ProtectedRoute({
 
   // Check admin requirement - only block if user exists and is definitely not an admin
   // Add explicit check for user.role existence
-  if (requireAdmin && user && user.role && user.role !== 'admin') {
+  if (requireAdmin && user && user.role && user.role !== "admin") {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -173,4 +182,3 @@ export function ProtectedRoute({
 
   return <>{children}</>;
 }
-
