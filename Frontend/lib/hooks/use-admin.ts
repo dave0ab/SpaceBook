@@ -50,3 +50,66 @@ export function useAdminBookingCounts(startDate: string, endDate: string) {
   });
 }
 
+// Hook to get bookings by user
+export function useBookingsByUser(startDate?: string, endDate?: string, status?: BookingStatus) {
+  return useQuery({
+    queryKey: ['bookings-by-user', startDate, endDate, status],
+    queryFn: () => bookingsService.getBookingsByUser(startDate, endDate, status),
+    enabled: true,
+  });
+}
+
+// Hook to get bookings by space
+export function useBookingsBySpace(startDate?: string, endDate?: string, status?: BookingStatus) {
+  return useQuery({
+    queryKey: ['bookings-by-space', startDate, endDate, status],
+    queryFn: () => bookingsService.getBookingsBySpace(startDate, endDate, status),
+    enabled: true,
+  });
+}
+
+// Hook to get approved reservations by date
+export function useApprovedReservationsByDate(startDate: string, endDate: string) {
+  return useQuery<Record<string, number>>({
+    queryKey: ['approved-reservations-by-date', startDate, endDate],
+    queryFn: () => bookingsService.getApprovedReservationsByDate(startDate, endDate),
+    enabled: !!startDate && !!endDate,
+  });
+}
+
+// Hook to get rejected reservations by date
+export function useRejectedReservationsByDate(startDate: string, endDate: string) {
+  return useQuery<Record<string, number>>({
+    queryKey: ['rejected-reservations-by-date', startDate, endDate],
+    queryFn: () => bookingsService.getRejectedReservationsByDate(startDate, endDate),
+    enabled: !!startDate && !!endDate,
+  });
+}
+
+// Hook to get rejected reservations by user
+export function useRejectedReservationsByUser(startDate?: string, endDate?: string) {
+  return useQuery({
+    queryKey: ['rejected-reservations-by-user', startDate, endDate],
+    queryFn: () => bookingsService.getRejectedReservationsByUser(startDate, endDate),
+    enabled: true,
+  });
+}
+
+// Hook to get detailed bookings by user with status breakdown
+export function useBookingsByUserDetailed(startDate?: string, endDate?: string) {
+  return useQuery({
+    queryKey: ['bookings-by-user-detailed', startDate, endDate],
+    queryFn: () => bookingsService.getBookingsByUserDetailed(startDate, endDate),
+    enabled: true,
+  });
+}
+
+// Hook to get detailed bookings by space with status breakdown
+export function useBookingsBySpaceDetailed(startDate?: string, endDate?: string) {
+  return useQuery({
+    queryKey: ['bookings-by-space-detailed', startDate, endDate],
+    queryFn: () => bookingsService.getBookingsBySpaceDetailed(startDate, endDate),
+    enabled: true,
+  });
+}
+

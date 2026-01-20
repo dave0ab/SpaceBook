@@ -67,6 +67,108 @@ export class BookingsController {
     return this.bookingsService.getCountsByDate(filterUserId, startDate, endDate);
   }
 
+  @Get('statistics/by-user')
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.admin)
+  @ApiOperation({ summary: 'Get booking statistics grouped by user (Admin only)' })
+  @ApiQuery({ name: 'startDate', required: false, description: 'Start date (YYYY-MM-DD format)' })
+  @ApiQuery({ name: 'endDate', required: false, description: 'End date (YYYY-MM-DD format)' })
+  @ApiQuery({ name: 'status', required: false, enum: BookingStatus, description: 'Filter by status' })
+  @ApiResponse({ status: 200, description: 'Booking statistics by user' })
+  async getBookingsByUser(
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+    @Query('status') status?: BookingStatus,
+  ) {
+    return this.bookingsService.getBookingsByUser(startDate, endDate, status);
+  }
+
+  @Get('statistics/by-space')
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.admin)
+  @ApiOperation({ summary: 'Get booking statistics grouped by space (Admin only)' })
+  @ApiQuery({ name: 'startDate', required: false, description: 'Start date (YYYY-MM-DD format)' })
+  @ApiQuery({ name: 'endDate', required: false, description: 'End date (YYYY-MM-DD format)' })
+  @ApiQuery({ name: 'status', required: false, enum: BookingStatus, description: 'Filter by status' })
+  @ApiResponse({ status: 200, description: 'Booking statistics by space' })
+  async getBookingsBySpace(
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+    @Query('status') status?: BookingStatus,
+  ) {
+    return this.bookingsService.getBookingsBySpace(startDate, endDate, status);
+  }
+
+  @Get('statistics/approved-by-date')
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.admin)
+  @ApiOperation({ summary: 'Get approved reservations grouped by date (Admin only)' })
+  @ApiQuery({ name: 'startDate', required: true, description: 'Start date (YYYY-MM-DD format)' })
+  @ApiQuery({ name: 'endDate', required: true, description: 'End date (YYYY-MM-DD format)' })
+  @ApiResponse({ status: 200, description: 'Approved reservations by date' })
+  async getApprovedReservationsByDate(
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ) {
+    return this.bookingsService.getApprovedReservationsByDate(startDate, endDate);
+  }
+
+  @Get('statistics/rejected-by-date')
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.admin)
+  @ApiOperation({ summary: 'Get rejected reservations grouped by date (Admin only)' })
+  @ApiQuery({ name: 'startDate', required: true, description: 'Start date (YYYY-MM-DD format)' })
+  @ApiQuery({ name: 'endDate', required: true, description: 'End date (YYYY-MM-DD format)' })
+  @ApiResponse({ status: 200, description: 'Rejected reservations by date' })
+  async getRejectedReservationsByDate(
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ) {
+    return this.bookingsService.getRejectedReservationsByDate(startDate, endDate);
+  }
+
+  @Get('statistics/rejected-by-user')
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.admin)
+  @ApiOperation({ summary: 'Get rejected reservations grouped by user (Admin only)' })
+  @ApiQuery({ name: 'startDate', required: false, description: 'Start date (YYYY-MM-DD format)' })
+  @ApiQuery({ name: 'endDate', required: false, description: 'End date (YYYY-MM-DD format)' })
+  @ApiResponse({ status: 200, description: 'Rejected reservations by user' })
+  async getRejectedReservationsByUser(
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ) {
+    return this.bookingsService.getRejectedReservationsByUser(startDate, endDate);
+  }
+
+  @Get('statistics/by-user-detailed')
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.admin)
+  @ApiOperation({ summary: 'Get detailed booking statistics by user with status breakdown (Admin only)' })
+  @ApiQuery({ name: 'startDate', required: false, description: 'Start date (YYYY-MM-DD format)' })
+  @ApiQuery({ name: 'endDate', required: false, description: 'End date (YYYY-MM-DD format)' })
+  @ApiResponse({ status: 200, description: 'Detailed booking statistics by user' })
+  async getBookingsByUserDetailed(
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ) {
+    return this.bookingsService.getBookingsByUserDetailed(startDate, endDate);
+  }
+
+  @Get('statistics/by-space-detailed')
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.admin)
+  @ApiOperation({ summary: 'Get detailed booking statistics by space with status breakdown (Admin only)' })
+  @ApiQuery({ name: 'startDate', required: false, description: 'Start date (YYYY-MM-DD format)' })
+  @ApiQuery({ name: 'endDate', required: false, description: 'End date (YYYY-MM-DD format)' })
+  @ApiResponse({ status: 200, description: 'Detailed booking statistics by space' })
+  async getBookingsBySpaceDetailed(
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ) {
+    return this.bookingsService.getBookingsBySpaceDetailed(startDate, endDate);
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get a booking by ID' })
   @ApiResponse({ status: 200, description: 'Booking found' })
