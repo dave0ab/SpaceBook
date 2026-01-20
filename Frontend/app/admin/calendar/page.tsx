@@ -64,9 +64,9 @@ export default function AdminCalendarPage() {
     return (
       <div className="flex min-h-screen bg-background">
         <AdminSidebar />
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col w-full md:w-auto">
           <AdminTopbar />
-          <main className="flex-1 p-6 flex items-center justify-center">
+          <main className="flex-1 p-4 md:p-6 flex items-center justify-center">
             <Loader2 className="h-12 w-12 animate-spin text-primary" />
           </main>
         </div>
@@ -136,13 +136,13 @@ export default function AdminCalendarPage() {
   return (
     <div className="flex min-h-screen bg-background">
       <AdminSidebar />
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col w-full md:w-auto">
         <AdminTopbar />
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-4 md:p-6">
           <Card className="bg-card border-border">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>{t('calendar.calendar')}</CardTitle>
-              <div className="flex items-center gap-4">
+            <CardHeader className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4 p-4 md:p-6 pb-4">
+              <CardTitle className="text-base md:text-lg">{t('calendar.calendar')}</CardTitle>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 md:gap-4 w-full sm:w-auto">
                 {/* View Toggle */}
                 <div className="flex bg-secondary rounded-lg p-1">
                   <Button
@@ -165,7 +165,7 @@ export default function AdminCalendarPage() {
                   <Button variant="outline" size="icon" onClick={navigatePrev}>
                     <ChevronLeft className="h-4 w-4" />
                   </Button>
-                  <span className="font-medium min-w-[150px] text-center">
+                  <span className="font-medium min-w-0 sm:min-w-[150px] text-center text-sm md:text-base flex-1 sm:flex-none">
                     {viewMode === "week"
                       ? `${format(weekDays[0], "MMM d")} - ${format(weekDays[6], "MMM d, yyyy")}`
                       : format(currentDate, "MMMM yyyy")}
@@ -176,124 +176,126 @@ export default function AdminCalendarPage() {
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-4 md:p-6 pt-0">
               {/* Legend */}
-              <div className="flex items-center gap-6 mb-6 flex-wrap">
+              <div className="flex items-center gap-3 md:gap-6 mb-4 md:mb-6 flex-wrap">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded bg-auditorium" />
-                  <span className="text-sm text-muted-foreground">{t('spaces.auditorium')}</span>
+                  <div className="w-3 h-3 md:w-3 md:h-3 rounded bg-auditorium" />
+                  <span className="text-xs md:text-sm text-muted-foreground">{t('spaces.auditorium')}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded bg-gym" />
-                  <span className="text-sm text-muted-foreground">{t('spaces.gym')}</span>
+                  <div className="w-3 h-3 md:w-3 md:h-3 rounded bg-gym" />
+                  <span className="text-xs md:text-sm text-muted-foreground">{t('spaces.gym')}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded bg-soccer" />
-                  <span className="text-sm text-muted-foreground">{t('spaces.soccer')}</span>
+                  <div className="w-3 h-3 md:w-3 md:h-3 rounded bg-soccer" />
+                  <span className="text-xs md:text-sm text-muted-foreground">{t('spaces.soccer')}</span>
                 </div>
-                <div className="flex items-center gap-4 ml-auto">
+                <div className="flex items-center gap-2 md:gap-4 ml-auto flex-wrap">
                   <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-status-approved" />
-                    <span className="text-sm text-muted-foreground">{t('booking.approved')}</span>
+                    <CheckCircle className="h-3 w-3 md:h-4 md:w-4 text-status-approved" />
+                    <span className="text-xs md:text-sm text-muted-foreground">{t('booking.approved')}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-status-pending" />
-                    <span className="text-sm text-muted-foreground">{t('booking.pending')}</span>
+                    <Clock className="h-3 w-3 md:h-4 md:w-4 text-status-pending" />
+                    <span className="text-xs md:text-sm text-muted-foreground">{t('booking.pending')}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <XCircle className="h-4 w-4 text-status-rejected" />
-                    <span className="text-sm text-muted-foreground">{t('booking.rejected')}</span>
+                    <XCircle className="h-3 w-3 md:h-4 md:w-4 text-status-rejected" />
+                    <span className="text-xs md:text-sm text-muted-foreground">{t('booking.rejected')}</span>
                   </div>
                 </div>
               </div>
 
               {viewMode === "week" ? (
                 /* Week View */
-                <div className="grid grid-cols-7 gap-2">
-                  {weekDays.map((day) => {
-                    const bookingCount = getBookingCountForDate(day)
-                    const isSelected = selectedDate && isSameDay(day, selectedDate)
-                    const isToday = isSameDay(day, new Date())
-                    const isBothTodayAndSelected = isToday && isSelected
-                    
-                    return (
-                      <div 
-                        key={day.toISOString()} 
-                        className="min-h-[200px] cursor-pointer relative"
-                        onClick={() => {
-                          setSelectedDate(day)
-                          // Scroll to details section after a short delay
-                          setTimeout(() => {
-                            const detailsSection = document.getElementById('selected-date-details')
-                            if (detailsSection) {
-                              detailsSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                            }
-                          }, 100)
-                        }}
-                      >
-                        {/* Count Badge - Top Right Corner */}
-                        {bookingCount > 0 && (
-                          <div className={cn(
-                            "absolute top-1 right-1 z-10 rounded-full font-bold text-xs min-w-[24px] h-6 flex items-center justify-center px-2 shadow-md",
-"bg-red-500 text-white"
-                          )}>
-                            {bookingCount}
-                          </div>
-                        )}
-                        
-                        <div
-                          className={cn(
-                            "text-center py-2 rounded-t-lg font-medium relative",
-                            isBothTodayAndSelected 
-                              ? "bg-red-500 text-white ring-2 ring-primary ring-offset-2" 
-                              : isToday 
-                                ? "bg-secondary text-white border-2 border-blue-400" 
-                                : isSelected 
-                                  ? "bg-primary/20 text-primary border-2 border-primary" 
-                                  : "bg-secondary",
-                          )}
+                <div className="overflow-x-auto -mx-4 md:mx-0 px-4 md:px-0">
+                  <div className="grid grid-cols-7 gap-1 md:gap-2 min-w-[700px] md:min-w-0">
+                    {weekDays.map((day) => {
+                      const bookingCount = getBookingCountForDate(day)
+                      const isSelected = selectedDate && isSameDay(day, selectedDate)
+                      const isToday = isSameDay(day, new Date())
+                      const isBothTodayAndSelected = isToday && isSelected
+                      
+                      return (
+                        <div 
+                          key={day.toISOString()} 
+                          className="min-h-[120px] md:min-h-[200px] cursor-pointer relative"
+                          onClick={() => {
+                            setSelectedDate(day)
+                            // Scroll to details section after a short delay
+                            setTimeout(() => {
+                              const detailsSection = document.getElementById('selected-date-details')
+                              if (detailsSection) {
+                                detailsSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                              }
+                            }, 100)
+                          }}
                         >
-                          <div className="text-xs text-muted-foreground">{format(day, "EEE")}</div>
-                          <div className="text-lg">
-                            {format(day, "d")}
+                          {/* Count Badge - Top Right Corner */}
+                          {bookingCount > 0 && (
+                            <div className={cn(
+                              "absolute top-1 right-1 z-10 rounded-full font-bold text-xs min-w-[20px] md:min-w-[24px] h-5 md:h-6 flex items-center justify-center px-1 md:px-2 shadow-md",
+                              "bg-red-500 text-white"
+                            )}>
+                              {bookingCount}
+                            </div>
+                          )}
+                          
+                          <div
+                            className={cn(
+                              "text-center py-1 md:py-2 rounded-t-lg font-medium relative",
+                              isBothTodayAndSelected 
+                                ? "bg-red-500 text-white ring-2 ring-primary ring-offset-2" 
+                                : isToday 
+                                  ? "bg-secondary text-white border-2 border-blue-400" 
+                                  : isSelected 
+                                    ? "bg-primary/20 text-primary border-2 border-primary" 
+                                    : "bg-secondary",
+                            )}
+                          >
+                            <div className="text-xs text-muted-foreground">{format(day, "EEE")}</div>
+                            <div className="text-base md:text-lg">
+                              {format(day, "d")}
+                            </div>
+                          </div>
+                          <div className={cn(
+                            "border rounded-b-lg p-1 md:p-2 space-y-1 min-h-[90px] md:min-h-[150px] flex items-center justify-center",
+                            isBothTodayAndSelected 
+                              ? "border-primary bg-primary/5 ring-1 ring-primary" 
+                              : isToday 
+                                ? "border-blue-400 border-2 bg-card" 
+                                : isSelected 
+                                  ? "border-primary bg-primary/10 border-2" 
+                                  : "border-border"
+                          )}>
+                            {bookingCount > 0 ? (
+                              <div className="text-center">
+                                <div className="text-lg md:text-2xl font-bold text-primary">{bookingCount}</div>
+                                <div className="text-xs text-muted-foreground">
+                                  {bookingCount === 1 ? t('sidebar.bookings').toLowerCase().slice(0, -1) : t('sidebar.bookings').toLowerCase()}
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="text-xs text-muted-foreground">{t('calendar.noBookingsDate')}</div>
+                            )}
                           </div>
                         </div>
-                        <div className={cn(
-                          "border rounded-b-lg p-2 space-y-1 min-h-[150px] flex items-center justify-center",
-                          isBothTodayAndSelected 
-                            ? "border-primary bg-primary/5 ring-1 ring-primary" 
-                            : isToday 
-                              ? "border-blue-400 border-2 bg-card" 
-                              : isSelected 
-                                ? "border-primary bg-primary/10 border-2" 
-                                : "border-border"
-                        )}>
-                          {bookingCount > 0 ? (
-                            <div className="text-center">
-                              <div className="text-2xl font-bold text-primary">{bookingCount}</div>
-                              <div className="text-xs text-muted-foreground">
-                                {bookingCount === 1 ? t('sidebar.bookings').toLowerCase().slice(0, -1) : t('sidebar.bookings').toLowerCase()}
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="text-xs text-muted-foreground">{t('calendar.noBookingsDate')}</div>
-                          )}
-                        </div>
-                      </div>
-                    )
-                  })}
+                      )
+                    })}
+                  </div>
                 </div>
               ) : (
                 /* Month View */
-                <div className="grid grid-cols-7 gap-1">
+                <div className="grid grid-cols-7 gap-0.5 md:gap-1">
                   {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
-                    <div key={day} className="text-center py-2 font-medium text-muted-foreground text-sm">
+                    <div key={day} className="text-center py-1 md:py-2 font-medium text-muted-foreground text-xs md:text-sm">
                       {day}
                     </div>
                   ))}
                   {/* Padding for first week */}
                   {Array.from({ length: (monthStart.getDay() + 6) % 7 }, (_, i) => (
-                    <div key={`pad-${i}`} className="min-h-[100px]" />
+                    <div key={`pad-${i}`} className="min-h-[60px] md:min-h-[100px]" />
                   ))}
                   {monthDays.map((day) => {
                     const bookingCount = getBookingCountForDate(day)
@@ -305,7 +307,7 @@ export default function AdminCalendarPage() {
                       <div
                         key={day.toISOString()}
                         className={cn(
-                          "min-h-[100px] border rounded-lg p-2 cursor-pointer transition-colors relative",
+                          "min-h-[60px] md:min-h-[100px] border rounded-lg p-1 md:p-2 cursor-pointer transition-colors relative",
                           isBothTodayAndSelected 
                             ? "border-primary bg-primary/10 ring-2 ring-primary ring-offset-1" 
                             : isToday 
@@ -328,8 +330,8 @@ export default function AdminCalendarPage() {
                         {/* Count Badge - Top Right Corner */}
                         {bookingCount > 0 && (
                           <div className={cn(
-                            "absolute top-1 right-1 z-10 rounded-full font-bold text-xs min-w-[24px] h-6 flex items-center justify-center px-2 shadow-md",
-"bg-red-500 text-white"
+                            "absolute top-0.5 right-0.5 md:top-1 md:right-1 z-10 rounded-full font-bold text-xs min-w-[18px] md:min-w-[24px] h-4 md:h-6 flex items-center justify-center px-1 md:px-2 shadow-md",
+                            "bg-red-500 text-white"
                           )}>
                             {bookingCount}
                           </div>
@@ -337,7 +339,7 @@ export default function AdminCalendarPage() {
                         
                         <div
                           className={cn(
-                            "text-sm font-medium mb-1 flex items-center justify-between",
+                            "text-xs md:text-sm font-medium mb-0.5 md:mb-1 flex items-center justify-between",
                             isBothTodayAndSelected 
                               ? "text-primary font-bold" 
                               : isToday 
@@ -349,11 +351,11 @@ export default function AdminCalendarPage() {
                         >
                           <span>{format(day, "d")}</span>
                         </div>
-                        <div className="space-y-1 flex items-center justify-center min-h-[60px]">
+                        <div className="space-y-1 flex items-center justify-center min-h-[40px] md:min-h-[60px]">
                           {bookingCount > 0 ? (
                             <div className="text-center">
-                              <div className="text-xl font-bold text-primary">{bookingCount}</div>
-                              <div className="text-xs text-muted-foreground">
+                              <div className="text-lg md:text-xl font-bold text-primary">{bookingCount}</div>
+                              <div className="text-xs text-muted-foreground hidden md:block">
                                 {bookingCount === 1 ? t('sidebar.bookings').toLowerCase().slice(0, -1) : t('sidebar.bookings').toLowerCase()}
                               </div>
                             </div>
@@ -371,24 +373,28 @@ export default function AdminCalendarPage() {
 
           {/* Selected Date Bookings Details */}
           {selectedDate && (
-            <Card id="selected-date-details" className="bg-card border-border mt-6">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5" />
-                  {t('calendar.bookingsFor')} {format(selectedDate, "EEEE, MMMM d, yyyy")}
-                  <Badge variant="secondary" className="ml-auto">
+            <Card id="selected-date-details" className="bg-card border-border mt-4 md:mt-6">
+              <CardHeader className="p-4 md:p-6 pb-4">
+                <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-2">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4 md:h-5 md:w-5" />
+                    <span className="text-base md:text-lg">
+                      {t('calendar.bookingsFor')} {format(selectedDate, "EEEE, MMMM d, yyyy")}
+                    </span>
+                  </div>
+                  <Badge variant="secondary" className="self-start sm:ml-auto sm:self-auto">
                     {selectedDateBookings.length} {selectedDateBookings.length === 1 ? t('sidebar.bookings').toLowerCase().slice(0, -1) : t('sidebar.bookings').toLowerCase()}
                   </Badge>
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-4 md:p-6 pt-0">
                 {selectedDateBookings.length === 0 ? (
-                  <div className="text-center py-12 text-muted-foreground">
-                    <Calendar className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                    <p>{t('calendar.noBookingsDate')}</p>
+                  <div className="text-center py-8 md:py-12 text-muted-foreground">
+                    <Calendar className="h-8 w-8 md:h-12 md:w-12 mx-auto mb-4 opacity-50" />
+                    <p className="text-sm md:text-base">{t('calendar.noBookingsDate')}</p>
                   </div>
                 ) : (
-                  <div className="space-y-4">
+                  <div className="space-y-3 md:space-y-4">
                     {selectedDateBookings
                       .sort((a, b) => a.startTime.localeCompare(b.startTime))
                       .map((booking) => {
@@ -396,35 +402,35 @@ export default function AdminCalendarPage() {
                         const user = booking.user
                         return (
                           <Card key={booking.id} className={cn("border", getStatusColor(booking.status))}>
-                            <CardContent className="p-4">
-                              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                                <div className="flex items-start gap-4 flex-1">
+                            <CardContent className="p-3 md:p-4">
+                              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-4">
+                                <div className="flex items-start gap-3 md:gap-4 flex-1">
                                   <div className={cn(
-                                    "p-3 rounded-lg border",
+                                    "p-2 md:p-3 rounded-lg border flex-shrink-0",
                                     getStatusColor(booking.status)
                                   )}>
                                     {getStatusIcon(booking.status)}
                                   </div>
-                                  <div className="flex-1">
-                                    <div className="flex items-center gap-2 mb-2">
-                                      <Building2 className="h-4 w-4 text-muted-foreground" />
-                                      <h3 className="font-semibold text-lg">{space?.name || 'Unknown Space'}</h3>
-                                      <Badge variant="outline" className="capitalize">
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                                      <Building2 className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                                      <h3 className="font-semibold text-base md:text-lg">{space?.name || 'Unknown Space'}</h3>
+                                      <Badge variant="outline" className="capitalize text-xs">
                                         {space?.type}
                                       </Badge>
                                     </div>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-muted-foreground">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3 text-xs md:text-sm text-muted-foreground">
                                       <div className="flex items-center gap-2">
-                                        <User className="h-4 w-4" />
-                                        <span className="font-medium">{user?.name || 'Unknown User'}</span>
-                                        <span className="text-xs">({user?.email || 'N/A'})</span>
+                                        <User className="h-3 w-3 md:h-4 md:w-4 flex-shrink-0" />
+                                        <span className="font-medium truncate">{user?.name || 'Unknown User'}</span>
+                                        <span className="text-xs hidden sm:inline">({user?.email || 'N/A'})</span>
                                       </div>
                                       <div className="flex items-center gap-2">
-                                        <Clock className="h-4 w-4" />
+                                        <Clock className="h-3 w-3 md:h-4 md:w-4 flex-shrink-0" />
                                         <span>{booking.startTime} - {booking.endTime}</span>
                                       </div>
                                       <div className="flex items-center gap-2">
-                                        <Calendar className="h-4 w-4" />
+                                        <Calendar className="h-3 w-3 md:h-4 md:w-4 flex-shrink-0" />
                                         <span>{format(new Date(booking.date), "MMMM d, yyyy")}</span>
                                       </div>
                                       <div className="flex items-center gap-2">
@@ -433,16 +439,16 @@ export default function AdminCalendarPage() {
                                       </div>
                                     </div>
                                     {booking.notes && (
-                                      <div className="mt-3 p-3 bg-secondary/50 rounded-lg">
-                                        <p className="text-sm font-medium mb-1">{t('booking.notes')}:</p>
-                                        <p className="text-sm text-muted-foreground">{booking.notes}</p>
+                                      <div className="mt-2 md:mt-3 p-2 md:p-3 bg-secondary/50 rounded-lg">
+                                        <p className="text-xs md:text-sm font-medium mb-1">{t('booking.notes')}:</p>
+                                        <p className="text-xs md:text-sm text-muted-foreground">{booking.notes}</p>
                                       </div>
                                     )}
                                   </div>
                                 </div>
-                                <div className="flex flex-col items-end gap-2">
+                                <div className="flex flex-row sm:flex-col items-start sm:items-end gap-2 flex-shrink-0">
                                   <Badge className={cn(
-                                    "border",
+                                    "border text-xs",
                                     booking.status === "approved" ? "bg-status-approved/20 text-status-approved border-status-approved/30" :
                                     booking.status === "pending" ? "bg-status-pending/20 text-status-pending border-status-pending/30" :
                                     "bg-status-rejected/20 text-status-rejected border-status-rejected/30"
