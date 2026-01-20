@@ -110,7 +110,7 @@ function Calendar({
         range_middle: cn('rounded-none', defaultClassNames.range_middle),
         range_end: cn('rounded-r-md bg-accent', defaultClassNames.range_end),
         today: cn(
-          'border-2 border-blue-400 text-white rounded-md data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground data-[selected=true]:ring-2 data-[selected=true]:ring-primary/50',
+          'text-status-approved font-semibold rounded-md data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground data-[selected=true]:ring-2 data-[selected=true]:ring-primary/50',
           defaultClassNames.today,
         ),
         outside: cn(
@@ -203,7 +203,7 @@ function CalendarDayButton({
       data-today={modifiers.today}
       className={cn(
         'data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[selected-single=true]:ring-2 data-[selected-single=true]:ring-primary/50 data-[selected-single=true]:font-bold',
-        'data-[today=true]:border-2 data-[today=true]:border-blue-400 data-[today=true]:text-white data-[today=true]:data-[selected-single=true]:bg-primary data-[today=true]:data-[selected-single=true]:text-primary-foreground data-[today=true]:data-[selected-single=true]:ring-2 data-[today=true]:data-[selected-single=true]:ring-primary/50',
+        'data-[today=true]:text-status-approved data-[today=true]:font-semibold data-[today=true]:data-[selected-single=true]:bg-primary data-[today=true]:data-[selected-single=true]:text-primary-foreground data-[today=true]:data-[selected-single=true]:ring-2 data-[today=true]:data-[selected-single=true]:ring-primary/50',
         'data-[range-middle=true]:bg-accent data-[range-middle=true]:text-accent-foreground data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground',
         'group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 dark:hover:text-accent-foreground',
         'flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px]',

@@ -18,7 +18,11 @@ export default function AdminLayout({
       {isLoginPage ? (
         children
       ) : (
-        <ProtectedRoute requireAdmin>{children}</ProtectedRoute>
+        <ProtectedRoute requireAdmin>
+          <MobileMenuProvider>
+            {children}
+          </MobileMenuProvider>
+        </ProtectedRoute>
       )}
     </Providers>
   );

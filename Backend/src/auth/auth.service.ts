@@ -54,7 +54,7 @@ export class AuthService {
 
     console.log(`✅ [AUTH] User registered successfully - ID: ${user.id}, Email: ${user.email}, Role: ${user.role}`);
 
-    const tokens = await this.generateTokens(user.id, user.email);
+    const tokens = await this.generateTokens(user.id, user.email, user.role);
     await this.saveRefreshToken(user.id, tokens.refreshToken);
 
     return {
@@ -87,7 +87,7 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const tokens = await this.generateTokens(user.id, user.email);
+    const tokens = await this.generateTokens(user.id, user.email, user.role);
     await this.saveRefreshToken(user.id, tokens.refreshToken);
 
     console.log(`✅ [AUTH] User logged in successfully - ID: ${user.id}, Email: ${user.email}, Role: ${user.role}`);
@@ -134,7 +134,7 @@ export class AuthService {
         throw new UnauthorizedException('User not found or inactive');
       }
 
-      const tokens = await this.generateTokens(user.id, user.email);
+      const tokens = await this.generateTokens(user.id, user.email, user.role);
       await this.deleteRefreshToken(refreshTokenDto.refreshToken);
       await this.saveRefreshToken(user.id, tokens.refreshToken);
 
@@ -157,8 +157,8 @@ export class AuthService {
     return { message: 'Logged out successfully' };
   }
 
-  private async generateTokens(userId: string, email: string) {
-    const payload = { sub: userId, email };
+  private async generateTokens(userId: string, email: string, role: string) {
+    const payload = { sub: userId, email, role };
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload, {

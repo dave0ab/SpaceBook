@@ -42,6 +42,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           try {
             // Try to get user info from token
             const userInfo = await authService.getCurrentUser();
+            // Ensure role is set - if JWT doesn't have it, log a warning
+            if (!userInfo.role) {
+              console.warn('User role not found in token, defaulting to user');
+              userInfo.role = 'user';
+            }
             setUser(userInfo);
           } catch (error) {
             // Token might be invalid or expired, clear it

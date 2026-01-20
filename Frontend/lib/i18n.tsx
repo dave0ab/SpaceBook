@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback, useMemo } from 'react';
 
 // Import translations
 import esMessages from '../messages/es.json';
@@ -73,21 +73,23 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     setMounted(true);
   }, []);
 
-  const setLocale = (newLocale: Locale) => {
-    setLocaleState(newLocale);
-    setLocaleCookie(newLocale);
-  };
+  const setLocale = useCallback((newLocale: Locale) => {
+    if (locales.includes(newLocale)) {
+      setLocaleState(newLocale);
+      setLocaleCookie(newLocale);
+    }
+  }, []);
 
-  const t = (key: string): string => {
+  const t = useCallback((key: string): string => {
     return getNestedValue(messages[locale], key);
-  };
+  }, [locale]);
 
-  // Always render with current locale (no hydration mismatch since we use useEffect)
-  const value = {
+  // Memoize context value to prevent unnecessary re-renders
+  const value = useMemo(() => ({
     locale,
     setLocale,
     t,
-  };
+  }), [locale, setLocale, t]);
 
   return (
     <I18nContext.Provider value={value}>

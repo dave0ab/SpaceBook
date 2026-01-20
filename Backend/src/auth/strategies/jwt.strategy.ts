@@ -17,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: { sub: string; email: string }) {
+  async validate(payload: { sub: string; email: string; role: string }) {
     const user = await this.prisma.user.findUnique({
       where: { id: payload.sub },
       select: {
@@ -32,6 +32,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     if (!user || user.status === 'inactive') {
       throw new UnauthorizedException('User not found or inactive');
+    }
+
+    // Validate role from token matches database role
+    if (user.role !== payload.role) {
+      throw new UnauthorizedException('Token role mismatch - please login again');
     }
 
     return user;

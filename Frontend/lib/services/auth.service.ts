@@ -104,11 +104,17 @@ export const authService = {
         }
         
         const payload = JSON.parse(atob(parts[1]));
+        
+        // Validate role exists in token
+        if (!payload.role) {
+          throw new Error('Role not found in token');
+        }
+        
         return {
           id: payload.sub,
           email: payload.email || '',
           name: payload.name || payload.email?.split('@')[0] || 'User',
-          role: payload.role || 'user',
+          role: payload.role, // Get role directly from token
           status: payload.status || 'active',
           avatar: payload.avatar,
         };
