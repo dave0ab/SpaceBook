@@ -22,6 +22,17 @@ export default function UserApplicationsPage() {
   const [activeTab, setActiveTab] = useState<BookingStatus | "all">("all")
   const t = useTranslations()
 
+  const formatCreatedAt = (createdAt: unknown) => {
+    try {
+      if (!createdAt) return "-"
+      const date = new Date(createdAt as any)
+      if (Number.isNaN(date.getTime())) return "-"
+      return format(date, "MMM d, yyyy HH:mm")
+    } catch {
+      return "-"
+    }
+  }
+
   const userBookings = bookings
 
   const filteredBookings = activeTab === "all" ? userBookings : userBookings.filter((b) => b.status === activeTab)
@@ -164,6 +175,10 @@ export default function UserApplicationsPage() {
                                 <div className="flex items-center gap-1">
                                   <Clock className="h-3 w-3 md:h-4 md:w-4 flex-shrink-0" />
                                   <span>{booking.startTime} - {booking.endTime}</span>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <Clock className="h-3 w-3 md:h-4 md:w-4 flex-shrink-0" />
+                                  <span>Requested: {formatCreatedAt((booking as any).createdAt)}</span>
                                 </div>
                               </div>
                               {booking.notes && (

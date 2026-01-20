@@ -86,6 +86,17 @@ export default function UserCalendarPage() {
     }
   }
 
+  const formatCreatedAt = (createdAt: unknown) => {
+    try {
+      if (!createdAt) return "-"
+      const date = new Date(createdAt as any)
+      if (Number.isNaN(date.getTime())) return "-"
+      return format(date, "MMM d, yyyy HH:mm")
+    } catch {
+      return "-"
+    }
+  }
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background">
@@ -322,8 +333,8 @@ export default function UserCalendarPage() {
                                     </span>
                                   </div>
                                 </Badge>
-                                <div className="text-xs text-muted-foreground">
-                                  {format(new Date(booking.createdAt), "MMM d, yyyy")}
+                                <div className="text-xs text-muted-foreground whitespace-nowrap">
+                                  Requested: {formatCreatedAt((booking as any).createdAt)}
                                 </div>
                               </div>
                             </div>
