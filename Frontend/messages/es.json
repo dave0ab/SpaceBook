@@ -82,6 +82,10 @@
     "viewAll": "Ver Todas",
     "recentBookings": "Reservas Recientes",
     "upcomingBookings": "Próximas Reservas"
+    ,
+    "requestCreatedAt": "Solicitud creada el"
+    ,
+    "createdAt": "Creada el"
   },
   "spaces": {
     "spaces": "Espacios",

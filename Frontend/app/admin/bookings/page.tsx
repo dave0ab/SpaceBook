@@ -36,6 +36,17 @@ export default function AdminBookingsPage() {
   const updateStatus = useUpdateBookingStatus()
   const t = useTranslations()
 
+  const formatCreatedAt = (createdAt: unknown) => {
+    try {
+      if (!createdAt) return "-"
+      const date = new Date(createdAt as any)
+      if (Number.isNaN(date.getTime())) return "-"
+      return format(date, "MMM d, yyyy HH:mm")
+    } catch {
+      return "-"
+    }
+  }
+
   // Filter states
   const [searchQuery, setSearchQuery] = useState("")
   const [statusFilter, setStatusFilter] = useState<string>("all")
@@ -341,6 +352,10 @@ export default function AdminBookingsPage() {
                               <p className="text-sm">{format(new Date(booking.date), "MMM d, yyyy")}</p>
                             </div>
                             <div className="flex items-center gap-2">
+                              <p className="text-xs text-muted-foreground">{t('booking.createdAt')}:</p>
+                              <p className="text-sm">{formatCreatedAt((booking as any).createdAt)}</p>
+                            </div>
+                            <div className="flex items-center gap-2">
                               <p className="text-xs text-muted-foreground">{t('booking.time')}:</p>
                               <p className="text-sm">{booking.startTime} - {booking.endTime}</p>
                             </div>
@@ -383,6 +398,7 @@ export default function AdminBookingsPage() {
                           <th className="text-left py-3 px-3 md:px-4 font-medium text-muted-foreground text-xs md:text-sm">{t('booking.user')}</th>
                           <th className="text-left py-3 px-3 md:px-4 font-medium text-muted-foreground text-xs md:text-sm">{t('booking.space')}</th>
                           <th className="text-left py-3 px-3 md:px-4 font-medium text-muted-foreground text-xs md:text-sm">{t('booking.date')}</th>
+                          <th className="text-left py-3 px-3 md:px-4 font-medium text-muted-foreground text-xs md:text-sm">{t('booking.createdAt')}</th>
                           <th className="text-left py-3 px-3 md:px-4 font-medium text-muted-foreground text-xs md:text-sm">{t('booking.time')}</th>
                           <th className="text-left py-3 px-3 md:px-4 font-medium text-muted-foreground text-xs md:text-sm">{t('booking.status')}</th>
                           <th className="text-left py-3 px-3 md:px-4 font-medium text-muted-foreground text-xs md:text-sm">{t('booking.actions')}</th>
@@ -410,6 +426,9 @@ export default function AdminBookingsPage() {
                               <p className="text-xs md:text-sm text-muted-foreground capitalize">{booking.space?.type || 'N/A'}</p>
                             </td>
                             <td className="py-3 md:py-4 px-3 md:px-4 text-sm md:text-base">{format(new Date(booking.date), "MMM d, yyyy")}</td>
+                            <td className="py-3 md:py-4 px-3 md:px-4 text-xs md:text-sm text-muted-foreground whitespace-nowrap">
+                              {formatCreatedAt((booking as any).createdAt)}
+                            </td>
                             <td className="py-3 md:py-4 px-3 md:px-4 text-sm md:text-base">
                               {booking.startTime} - {booking.endTime}
                             </td>

@@ -82,6 +82,10 @@
     "viewAll": "View All",
     "recentBookings": "Recent Bookings",
     "upcomingBookings": "Upcoming Bookings"
+    ,
+    "requestCreatedAt": "Request created at"
+    ,
+    "createdAt": "Created at"
   },
   "spaces": {
     "spaces": "Spaces",
