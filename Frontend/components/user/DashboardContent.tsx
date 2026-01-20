@@ -23,11 +23,11 @@ import { motion } from "framer-motion";
 import { User, Booking } from "@/lib/types";
 
 interface DashboardContentProps {
-  initialUser: User | null;
-  initialBookings: Booking[];
+  initialUser?: User | null;
+  initialBookings?: Booking[];
 }
 
-export function DashboardContent({ initialUser, initialBookings }: DashboardContentProps) {
+export function DashboardContent({ initialUser, initialBookings = [] }: DashboardContentProps = {}) {
   const { user: authUser } = useAuth();
   const user = authUser || initialUser;
   

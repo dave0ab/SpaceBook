@@ -28,6 +28,7 @@ import {
   PaginationEllipsis,
 } from "@/components/ui/pagination";
 import { useAdminBookings, useUpdateBookingStatus } from "@/lib/hooks/use-admin";
+import { useSpaces } from "@/lib/hooks/use-spaces";
 import { format } from "date-fns";
 import {
   Check,
@@ -44,12 +45,13 @@ import { useTranslations } from "@/lib/i18n";
 const ITEMS_PER_PAGE = 10;
 
 interface BookingsManagementProps {
-  initialBookings: any[];
-  spaces: any[];
+  initialBookings?: any[];
+  spaces?: any[];
 }
 
-export function BookingsManagement({ initialBookings, spaces }: BookingsManagementProps) {
-  const { data: bookings = initialBookings, isLoading } = useAdminBookings();
+export function BookingsManagement({ initialBookings, spaces: initialSpaces }: BookingsManagementProps = {}) {
+  const { data: bookings = initialBookings || [], isLoading } = useAdminBookings();
+  const { data: spaces = initialSpaces || [] } = useSpaces();
   const updateStatus = useUpdateBookingStatus();
   const t = useTranslations();
 

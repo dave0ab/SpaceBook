@@ -16,11 +16,11 @@ import { motion } from "framer-motion";
 import { User, Booking } from "@/lib/types";
 
 interface ApplicationsContentProps {
-  initialUser: User | null;
-  initialBookings: Booking[];
+  initialUser?: User | null;
+  initialBookings?: Booking[];
 }
 
-export function ApplicationsContent({ initialUser, initialBookings }: ApplicationsContentProps) {
+export function ApplicationsContent({ initialUser, initialBookings = [] }: ApplicationsContentProps = {}) {
   const { user: authUser } = useAuth();
   const user = authUser || initialUser;
   

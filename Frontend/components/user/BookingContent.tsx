@@ -29,10 +29,10 @@ import { motion } from "framer-motion";
 import { Space } from "@/lib/types";
 
 interface BookingContentProps {
-  initialSpaces: Space[];
+  initialSpaces?: Space[];
 }
 
-export function BookingContent({ initialSpaces }: BookingContentProps) {
+export function BookingContent({ initialSpaces = [] }: BookingContentProps = {}) {
   const { user } = useAuth();
   const t = useTranslations();
   

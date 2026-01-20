@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useAdminBookings, useAdminBookingCounts } from "@/lib/hooks/use-admin";
+import { useSpaces } from "@/lib/hooks/use-spaces";
 import {
   Loader2,
   CheckCircle,
@@ -34,10 +35,11 @@ import { useTranslations } from "@/lib/i18n";
 type ViewMode = "week" | "month";
 
 interface AdminCalendarProps {
-  initialSpaces: any[];
+  initialSpaces?: any[];
 }
 
-export function AdminCalendar({ initialSpaces: spaces }: AdminCalendarProps) {
+export function AdminCalendar({ initialSpaces }: AdminCalendarProps = {}) {
+  const { data: spaces = initialSpaces || [] } = useSpaces();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [viewMode, setViewMode] = useState<ViewMode>("month");

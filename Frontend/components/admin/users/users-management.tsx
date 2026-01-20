@@ -21,11 +21,11 @@ import {
 } from "@/components/ui/dialog";
 
 interface UsersManagementProps {
-  initialUsers: any[];
+  initialUsers?: any[];
 }
 
-export function UsersManagement({ initialUsers }: UsersManagementProps) {
-  const { data: users = initialUsers, isLoading } = useAdminUsers();
+export function UsersManagement({ initialUsers }: UsersManagementProps = {}) {
+  const { data: users = initialUsers || [], isLoading } = useAdminUsers();
   const createUser = useCreateUser();
   const deleteUser = useDeleteUser();
   const [open, setOpen] = useState(false);

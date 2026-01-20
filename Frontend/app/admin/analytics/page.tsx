@@ -1,47 +1,55 @@
+'use client';
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { fetchAdminBookings, fetchAdminUsers, fetchAdminSpaces } from "@/lib/server-api";
-import { getTranslations } from "@/lib/i18n-server";
+import { useAdminBookings, useAdminUsers } from "@/lib/hooks/use-admin";
+import { useSpaces } from "@/lib/hooks/use-spaces";
+import { useTranslations } from "@/lib/i18n";
 import { StatusBreakdownChart } from "@/components/admin/analytics/status-breakdown-chart";
+import { Loader2 } from "lucide-react";
 
-export const dynamic = "force-dynamic";
+export default function AdminAnalyticsPage() {
+  const { data: bookings = [], isLoading: bookingsLoading } = useAdminBookings();
+  const { data: users = [], isLoading: usersLoading } = useAdminUsers();
+  const { data: spaces = [], isLoading: spacesLoading } = useSpaces();
+  const t = useTranslations();
 
-export default async function AdminAnalyticsPage() {
-  const [bookings, users, spaces, t] = await Promise.all([
-    fetchAdminBookings().catch(() => []),
-    fetchAdminUsers().catch(() => []),
-    fetchAdminSpaces().catch(() => []),
-    getTranslations(),
-  ]);
+  if (bookingsLoading || usersLoading || spacesLoading) {
+    return (
+      <main className="flex-1 p-4 md:p-6 flex items-center justify-center">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+      </main>
+    );
+  }
 
   // Calculate bookings per space
-  const bookingsPerSpace = spaces.map((space: any) => ({
+  const bookingsPerSpace = spaces.map((space) => ({
     name: space.name,
     type: space.type,
-    count: bookings.filter((b: any) => b.spaceId === space.id).length,
+    count: bookings.filter((b) => b.spaceId === space.id).length,
   }));
 
   // Calculate bookings by user
   const bookingsByUser = users
-    .filter((u: any) => u.role === "user")
-    .map((user: any) => ({
+    .filter((u) => u.role === "user")
+    .map((user) => ({
       name: user.name,
       count: bookings.filter(
-        (b: any) => b.user?.id === user.id || b.userId === user.id,
+        (b) => b.user?.id === user.id || b.userId === user.id,
       ).length,
     }))
-    .sort((a: any, b: any) => b.count - a.count)
+    .sort((a, b) => b.count - a.count)
     .slice(0, 5);
 
   // Status breakdown
   const statusBreakdown = {
-    approved: bookings.filter((b: any) => b.status === "approved").length,
-    pending: bookings.filter((b: any) => b.status === "pending").length,
-    rejected: bookings.filter((b: any) => b.status === "rejected").length,
+    approved: bookings.filter((b) => b.status === "approved").length,
+    pending: bookings.filter((b) => b.status === "pending").length,
+    rejected: bookings.filter((b) => b.status === "rejected").length,
   };
 
   const totalBookings = bookings.length;
-  const maxSpaceCount = Math.max(...bookingsPerSpace.map((s: any) => s.count), 1);
-  const maxUserCount = Math.max(...bookingsByUser.map((u: any) => u.count), 1);
+  const maxSpaceCount = Math.max(...bookingsPerSpace.map((s) => s.count), 1);
+  const maxUserCount = Math.max(...bookingsByUser.map((u) => u.count), 1);
 
   return (
     <main className="flex-1 p-4 md:p-6">
@@ -55,7 +63,7 @@ export default async function AdminAnalyticsPage() {
           </CardHeader>
           <CardContent className="p-4 md:p-6 pt-0">
             <div className="space-y-3 md:space-y-4">
-              {bookingsPerSpace.map((space: any) => (
+              {bookingsPerSpace.map((space) => (
                 <div key={space.name}>
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs md:text-sm font-medium">
@@ -94,7 +102,7 @@ export default async function AdminAnalyticsPage() {
           </CardHeader>
           <CardContent className="p-4 md:p-6 pt-0">
             <div className="space-y-3 md:space-y-4">
-              {bookingsByUser.map((user: any, index: number) => (
+              {bookingsByUser.map((user, index) => (
                 <div key={user.name}>
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs md:text-sm font-medium">

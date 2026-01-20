@@ -16,12 +16,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { User, Booking } from "@/lib/types";
 
 interface CalendarContentProps {
-  initialUser: User | null;
-  initialCounts: Record<string, number>;
-  initialBookings: Booking[];
+  initialUser?: User | null;
+  initialCounts?: Record<string, number>;
+  initialBookings?: Booking[];
 }
 
-export function CalendarContent({ initialUser, initialCounts, initialBookings }: CalendarContentProps) {
+export function CalendarContent({ initialUser, initialCounts = {}, initialBookings = [] }: CalendarContentProps = {}) {
   const { user: authUser } = useAuth()
   const user = authUser || initialUser;
   
