@@ -1,6 +1,5 @@
 import type React from "react";
 import { Providers } from "../providers";
-import { UserHeader } from "@/components/user/user-header";
 import { ProtectedRoute } from "@/components/protected-route";
 
 export default function UserLayout({
@@ -11,10 +10,7 @@ export default function UserLayout({
   return (
     <Providers>
       <ProtectedRoute>
-        <div className="min-h-screen bg-background">
-          <UserHeader />
-          {children}
-        </div>
+        <div className="min-h-screen bg-background">{children}</div>
       </ProtectedRoute>
     </Providers>
   );

@@ -3,7 +3,17 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Building2, Bell, User, ChevronDown, Menu, X, LogOut, Settings, Inbox } from "lucide-react";
+import {
+  Building2,
+  Bell,
+  User,
+  ChevronDown,
+  Menu,
+  X,
+  LogOut,
+  Settings,
+  Inbox,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -32,8 +42,6 @@ export function UserHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = useTranslations();
 
-
-
   const navItems = [
     { href: "/user/dashboard", label: t("sidebar.dashboard") },
     { href: "/user/book", label: t("sidebar.book") },
@@ -50,9 +58,14 @@ export function UserHeader() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/user/dashboard" className="flex items-center gap-2 group">
-             <div className="w-8 h-8 bg-primary rounded-full transition-transform duration-300 group-hover:scale-110" />
-            <span className="text-xl font-bold tracking-tight">{t("common.appName")}</span>
+          <Link
+            href="/user/dashboard"
+            className="flex items-center gap-2 group"
+          >
+            <div className="w-8 h-8 bg-primary rounded-full transition-transform duration-300 group-hover:scale-110" />
+            <span className="text-xl font-bold tracking-tight">
+              {t("common.appName")}
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -65,7 +78,7 @@ export function UserHeader() {
                   "text-sm font-medium transition-all duration-300 hover:text-primary",
                   pathname === item.href
                     ? "text-primary"
-                    : "text-muted-foreground"
+                    : "text-muted-foreground",
                 )}
               >
                 {item.label}
@@ -139,9 +152,8 @@ export function UserHeader() {
                 </Button>
               </DropdownMenuTrigger>
 
-
-              <DropdownMenuContent 
-                align="end" 
+              <DropdownMenuContent
+                align="end"
                 sideOffset={8}
                 className="w-56 p-1.5 bg-popover/95 backdrop-blur-xl border-border/50 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.1)] rounded-xl"
               >
@@ -159,9 +171,11 @@ export function UserHeader() {
                   <DropdownMenuItem className="flex items-center gap-2 px-3 py-2 text-[13px] font-medium rounded-md cursor-pointer transition-colors focus:bg-primary/5 focus:text-primary">
                     <User className="h-4 w-4 opacity-70" />
                     {t("topbar.profile")}
-                    <DropdownMenuShortcut className="text-[10px] opacity-40 font-mono tracking-tighter">⇧⌘P</DropdownMenuShortcut>
+                    <DropdownMenuShortcut className="text-[10px] opacity-40 font-mono tracking-tighter">
+                      ⇧⌘P
+                    </DropdownMenuShortcut>
                   </DropdownMenuItem>
-                  
+
                   <DropdownMenuItem className="flex items-center gap-2 px-3 py-2 text-[13px] font-medium rounded-md cursor-pointer transition-colors focus:bg-primary/5 focus:text-primary">
                     <Settings className="h-4 w-4 opacity-70" />
                     {t("topbar.settings")}
@@ -169,9 +183,9 @@ export function UserHeader() {
                 </div>
 
                 <DropdownMenuSeparator className="my-1.5 bg-border/40" />
-                
-                <DropdownMenuItem 
-                  onClick={handleLogout} 
+
+                <DropdownMenuItem
+                  onClick={handleLogout}
                   className="flex items-center gap-2 px-3 py-2 text-[13px] font-semibold text-red-500/90 rounded-md cursor-pointer transition-colors focus:bg-red-500/10 focus:text-red-600"
                 >
                   <LogOut className="h-4 w-4" />
@@ -208,7 +222,7 @@ export function UserHeader() {
                   "block px-4 py-3 rounded-lg text-sm font-medium transition-colors mb-1",
                   pathname === item.href
                     ? "bg-primary/10 text-primary"
-                    : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                    : "text-muted-foreground hover:text-foreground hover:bg-secondary",
                 )}
               >
                 {item.label}

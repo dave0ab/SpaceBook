@@ -20,15 +20,26 @@ import { format } from "date-fns";
 import { useTranslations } from "@/lib/i18n";
 
 import { motion } from "framer-motion";
+import { User, Booking } from "@/lib/types";
 
-export function DashboardContent() {
-  const { user } = useAuth();
-  const { data: bookings = [], isLoading } = useBookings(undefined, user?.id);
+interface DashboardContentProps {
+  initialUser: User | null;
+  initialBookings: Booking[];
+}
+
+export function DashboardContent({ initialUser, initialBookings }: DashboardContentProps) {
+  const { user: authUser } = useAuth();
+  const user = authUser || initialUser;
+  
+  const { data: bookings = [], isLoading } = useBookings(undefined, user?.id, undefined);
+  // Note: We use the server-side bookings for the first render to avoid flashing
+  const displayBookings = bookings.length > 0 ? bookings : initialBookings;
+  
   const t = useTranslations();
 
-  const pendingBookings = bookings.filter((b) => b.status === "pending");
-  const approvedBookings = bookings.filter((b) => b.status === "approved");
-  const rejectedBookings = bookings.filter((b) => b.status === "rejected");
+  const pendingBookings = displayBookings.filter((b) => b.status === "pending");
+  const approvedBookings = displayBookings.filter((b) => b.status === "approved");
+  const rejectedBookings = displayBookings.filter((b) => b.status === "rejected");
 
   const stats = [
     {
@@ -180,7 +191,7 @@ export function DashboardContent() {
               <div className="flex items-center justify-center py-20">
                 <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
               </div>
-            ) : bookings.length === 0 ? (
+            ) : displayBookings.length === 0 ? (
               <div className="text-center py-16 px-4">
                 <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center mx-auto mb-4 border border-border">
                     <Calendar className="h-6 w-6 text-muted-foreground" />
@@ -197,7 +208,7 @@ export function DashboardContent() {
               </div>
             ) : (
               <div className="divide-y divide-border/40">
-                {bookings.slice(0, 5).map((booking) => (
+                {displayBookings.slice(0, 5).map((booking) => (
                   <div
                     key={booking.id}
                     className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 hover:bg-muted/30 transition-colors"

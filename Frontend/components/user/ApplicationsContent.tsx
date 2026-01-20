@@ -13,14 +13,22 @@ import { format } from "date-fns";
 import { Clock, CheckCircle, XCircle, Calendar, Building2 } from "lucide-react";
 import { useTranslations } from '@/lib/i18n';
 import { motion } from "framer-motion";
+import { User, Booking } from "@/lib/types";
 
-export function ApplicationsContent() {
-  const { user: currentUser } = useAuth();
-  const { data: bookings = [], isLoading } = useBookings(undefined, currentUser?.id);
+interface ApplicationsContentProps {
+  initialUser: User | null;
+  initialBookings: Booking[];
+}
+
+export function ApplicationsContent({ initialUser, initialBookings }: ApplicationsContentProps) {
+  const { user: authUser } = useAuth();
+  const user = authUser || initialUser;
+  
+  const { data: bookings = [], isLoading } = useBookings(undefined, user?.id);
   const [activeTab, setActiveTab] = useState<BookingStatus | "all">("all");
   const t = useTranslations();
 
-  const userBookings = bookings;
+  const userBookings = bookings.length > 0 ? bookings : initialBookings;
 
   const filteredBookings = activeTab === "all" ? userBookings : userBookings.filter((b) => b.status === activeTab);
 
