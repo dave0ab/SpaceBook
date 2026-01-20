@@ -14,25 +14,25 @@ async function bootstrap() {
     const { method, originalUrl, ip, headers } = req;
     const userAgent = headers['user-agent']?.substring(0, 50) || 'unknown';
     const contentType = headers['content-type'] || 'N/A';
-    
+
     // Log incoming request
     console.log(`\n🔵 [REQUEST] ${method} ${originalUrl} | From: ${ip || 'unknown'} | User-Agent: ${userAgent}...`);
     if (method === 'POST' || method === 'PUT' || method === 'PATCH') {
       console.log(`   Content-Type: ${contentType}`);
     }
-    
+
     res.on('finish', () => {
       const duration = Date.now() - start;
       const { statusCode } = res;
       const timestamp = new Date().toISOString();
       const logColor = statusCode >= 500 ? '\x1b[31m' : statusCode >= 400 ? '\x1b[33m' : '\x1b[32m';
       const resetColor = '\x1b[0m';
-      
+
       console.log(
         `${logColor}🟢 [RESPONSE] ${method} ${originalUrl} ${statusCode}${resetColor} | ${duration}ms | ${timestamp}`
       );
     });
-    
+
     next();
   });
 
@@ -77,10 +77,10 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, document);
 
   const port = parseInt(process.env.PORT || '4253', 10);
-  
+
   // Get PrismaService reference for cleanup (PrismaService will auto-disconnect via OnModuleDestroy)
   const prismaService = app.get(PrismaService);
-  
+
   // Enable NestJS graceful shutdown hooks (handles SIGTERM and SIGINT automatically)
   app.enableShutdownHooks();
 
@@ -99,7 +99,7 @@ async function bootstrap() {
       // app.close() triggers NestJS lifecycle hooks including PrismaService.onModuleDestroy
       await app.close();
       // Extra safety: ensure Prisma is disconnected
-      await prismaService.$disconnect().catch(() => {});
+      await prismaService.$disconnect().catch(() => { });
       console.log('✅ Graceful shutdown completed. Port 4253 is now free.');
       process.exit(0);
     } catch (error) {
@@ -110,7 +110,7 @@ async function bootstrap() {
 
   // Handle SIGHUP (terminal disconnection) - not handled by NestJS by default
   process.on('SIGHUP', () => gracefulShutdown('SIGHUP'));
-  
+
   // Handle uncaught exceptions (critical errors)
   process.on('uncaughtException', async (error) => {
     console.error('❌ Uncaught Exception:', error);
