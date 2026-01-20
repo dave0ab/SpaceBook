@@ -74,8 +74,8 @@ export default function UserApplicationsPage() {
     return (
       <div className="min-h-screen bg-background">
         <UserHeader />
-        <main className="container mx-auto px-4 py-8 flex items-center justify-center min-h-[60vh]">
-          <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        <main className="container mx-auto px-4 md:px-6 py-4 md:py-8 flex items-center justify-center min-h-[60vh]">
+          <Loader2 className="h-8 w-8 md:h-12 md:w-12 animate-spin text-primary" />
         </main>
       </div>
     )
@@ -84,54 +84,61 @@ export default function UserApplicationsPage() {
   return (
     <div className="min-h-screen bg-background">
       <UserHeader />
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">{t('applications.myApplications')}</h1>
-          <p className="text-muted-foreground">{t('applications.applicationHistory')}</p>
+      <main className="container mx-auto px-4 md:px-6 py-4 md:py-8">
+        <div className="mb-6 md:mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold mb-2">{t('applications.myApplications')}</h1>
+          <p className="text-sm md:text-base text-muted-foreground">{t('applications.applicationHistory')}</p>
         </div>
 
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as BookingStatus | "all")}>
-          <TabsList className="mb-6">
-            <TabsTrigger value="all" className="gap-2">
-              {t('filters.allStatus')} <span className="text-muted-foreground">({counts.all})</span>
-            </TabsTrigger>
-            <TabsTrigger value="pending" className="gap-2">
-              {t('booking.pending')} <span className="text-muted-foreground">({counts.pending})</span>
-            </TabsTrigger>
-            <TabsTrigger value="approved" className="gap-2">
-              {t('booking.approved')} <span className="text-muted-foreground">({counts.approved})</span>
-            </TabsTrigger>
-            <TabsTrigger value="rejected" className="gap-2">
-              {t('booking.rejected')} <span className="text-muted-foreground">({counts.rejected})</span>
-            </TabsTrigger>
-          </TabsList>
+          <div className="overflow-x-auto mb-4 md:mb-6">
+            <TabsList className="inline-flex min-w-full md:min-w-0">
+              <TabsTrigger value="all" className="gap-1 md:gap-2 text-xs md:text-sm whitespace-nowrap">
+                {t('filters.allStatus')} <span className="text-muted-foreground">({counts.all})</span>
+              </TabsTrigger>
+              <TabsTrigger value="pending" className="gap-1 md:gap-2 text-xs md:text-sm whitespace-nowrap">
+                {t('booking.pending')} <span className="text-muted-foreground">({counts.pending})</span>
+              </TabsTrigger>
+              <TabsTrigger value="approved" className="gap-1 md:gap-2 text-xs md:text-sm whitespace-nowrap">
+                {t('booking.approved')} <span className="text-muted-foreground">({counts.approved})</span>
+              </TabsTrigger>
+              <TabsTrigger value="rejected" className="gap-1 md:gap-2 text-xs md:text-sm whitespace-nowrap">
+                {t('booking.rejected')} <span className="text-muted-foreground">({counts.rejected})</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value={activeTab}>
             {filteredBookings.length === 0 ? (
               <Card className="bg-card border-border">
-                <CardContent className="py-12 text-center">
-                  <Building2 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="font-medium mb-2">{t('applications.noApplications')}</h3>
-                  <p className="text-muted-foreground mb-4">
+                <CardContent className="py-8 md:py-12 text-center">
+                  <Building2 className="h-8 w-8 md:h-12 md:w-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="font-medium mb-2 text-sm md:text-base">{t('applications.noApplications')}</h3>
+                  <p className="text-xs md:text-sm text-muted-foreground mb-4">
                     {t('applications.startBooking')}
                   </p>
-                  <Button asChild>
+                  <Button asChild className="w-full sm:w-auto">
                     <a href="/user/book">{t('booking.bookSpace')}</a>
                   </Button>
                 </CardContent>
               </Card>
             ) : (
-              <div className="grid gap-4">
+              <div className="grid gap-3 md:gap-4">
                 {filteredBookings.map((booking) => {
                   const space = booking.space
                   const bookingDate = typeof booking.date === 'string' ? booking.date : booking.date
                   return (
                     <Card key={booking.id} className="bg-card border-border">
-                      <CardContent className="p-6">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                          <div className="flex items-start gap-4">
+                      <CardContent className="p-4 md:p-6">
+                        <div className="flex flex-col gap-3 md:gap-4">
+                          {/* Status Badge - Top on mobile, side on desktop */}
+                          <div className="flex items-center justify-between md:hidden">
+                            {getStatusBadge(booking.status)}
+                          </div>
+                          
+                          <div className="flex items-start gap-3 md:gap-4">
                             <div
-                              className={`p-3 rounded-lg ${
+                              className={`p-2 md:p-3 rounded-lg flex-shrink-0 ${
                                 booking.status === "pending"
                                   ? "bg-status-pending/20"
                                   : booking.status === "approved"
@@ -141,24 +148,33 @@ export default function UserApplicationsPage() {
                             >
                               {getStatusIcon(booking.status)}
                             </div>
-                            <div>
-                              <h3 className="font-semibold text-lg">{space?.name || 'Unknown Space'}</h3>
-                              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mt-1">
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-start justify-between gap-2 mb-2">
+                                <h3 className="font-semibold text-base md:text-lg">{space?.name || 'Unknown Space'}</h3>
+                                {/* Status Badge - Hidden on mobile, shown on desktop */}
+                                <div className="hidden md:flex items-center">
+                                  {getStatusBadge(booking.status)}
+                                </div>
+                              </div>
+                              <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-2 sm:gap-x-4 gap-y-1 text-xs md:text-sm text-muted-foreground">
                                 <div className="flex items-center gap-1">
-                                  <Calendar className="h-4 w-4" />
-                                  {format(new Date(bookingDate), "MMMM d, yyyy")}
+                                  <Calendar className="h-3 w-3 md:h-4 md:w-4 flex-shrink-0" />
+                                  <span>{format(new Date(bookingDate), "MMMM d, yyyy")}</span>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Clock className="h-4 w-4" />
-                                  {booking.startTime} - {booking.endTime}
+                                  <Clock className="h-3 w-3 md:h-4 md:w-4 flex-shrink-0" />
+                                  <span>{booking.startTime} - {booking.endTime}</span>
                                 </div>
                               </div>
                               {booking.notes && (
-                                <p className="text-sm text-muted-foreground mt-2">{t('booking.notes')}: {booking.notes}</p>
+                                <div className="mt-2 p-2 md:p-3 bg-secondary/50 rounded-lg">
+                                  <p className="text-xs md:text-sm text-muted-foreground">
+                                    <span className="font-medium">{t('booking.notes')}:</span> {booking.notes}
+                                  </p>
+                                </div>
                               )}
                             </div>
                           </div>
-                          <div className="flex items-center gap-4">{getStatusBadge(booking.status)}</div>
                         </div>
                       </CardContent>
                     </Card>
