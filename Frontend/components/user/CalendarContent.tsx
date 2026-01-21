@@ -290,6 +290,13 @@ export function CalendarContent({ initialUser, initialCounts = {}, initialBookin
                                                 <Building2 className="h-3.5 w-3.5" />
                                                 <span className="capitalize">{booking.space?.type}</span>
                                             </div>
+                                            {booking.createdAt && (
+                                              <div className="flex items-center gap-2 pt-1 border-t border-border/30">
+                                                <span className="text-xs text-muted-foreground/70">
+                                                  {t('booking.requestCreatedAt')}: {format(new Date(booking.createdAt), "MMM d, yyyy HH:mm")}
+                                                </span>
+                                              </div>
+                                            )}
                                         </div>
                                     </motion.div>
                                 ))

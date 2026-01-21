@@ -202,6 +202,16 @@ export function ApplicationsContent({ initialUser, initialBookings = [] }: Appli
                               {booking.startTime} — {booking.endTime}
                             </span>
                           </div>
+                          {booking.createdAt && (
+                            <div className="flex items-center gap-4 text-sm text-muted-foreground/80 pt-2 border-t border-border/30">
+                              <div className="h-10 w-10 rounded-full bg-background/80 flex items-center justify-center border border-border/40">
+                                <Calendar className="h-4 w-4" />
+                              </div>
+                              <span className="font-medium tracking-tight">
+                                {t('booking.requestCreatedAt')}: {format(new Date(booking.createdAt), "MMM d, yyyy HH:mm")}
+                              </span>
+                            </div>
+                          )}
                         </div>
 
                         {booking.notes && (

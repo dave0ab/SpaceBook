@@ -264,6 +264,7 @@ export function BookingsManagement({ initialBookings, spaces: initialSpaces }: B
                     <th className="text-left py-3 px-4 font-medium text-muted-foreground text-sm">{t("booking.date")}</th>
                     <th className="text-left py-3 px-4 font-medium text-muted-foreground text-sm">{t("booking.time")}</th>
                     <th className="text-left py-3 px-4 font-medium text-muted-foreground text-sm">{t("booking.status")}</th>
+                    <th className="text-left py-3 px-4 font-medium text-muted-foreground text-sm">{t("booking.created")}</th>
                     <th className="text-left py-3 px-4 font-medium text-muted-foreground text-sm">{t("booking.actions")}</th>
                   </tr>
                 </thead>
@@ -287,6 +288,7 @@ export function BookingsManagement({ initialBookings, spaces: initialSpaces }: B
                       <td className="py-4 px-4 text-sm">{format(new Date(booking.date), "MMM d, yyyy")}</td>
                       <td className="py-4 px-4 text-sm">{booking.startTime} - {booking.endTime}</td>
                       <td className="py-4 px-4">{getStatusBadge(booking.status)}</td>
+                      <td className="py-4 px-4 text-sm text-muted-foreground">{formatCreatedAt(booking.createdAt)}</td>
                       <td className="py-4 px-4">
                         {booking.status === "pending" && (
                           <div className="flex items-center gap-2">
